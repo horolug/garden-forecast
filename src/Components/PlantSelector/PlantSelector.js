@@ -1,4 +1,5 @@
 import React from 'react';
+import CallDarkSky from '../DarkSky/DarkSky';
 
 
 class PlantSelector extends React.Component {
@@ -10,13 +11,15 @@ class PlantSelector extends React.Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="col">
-          <p>Plant selection is happening here</p>
-        </div>
-
-        <div className="col">
-          <p>Seeding / propagation advice is shown here </p>
+      <div>
+        <CallDarkSky />
+        <div className="row">
+          <div className="col">
+            <p>Plant selection is happening here</p>
+          </div>
+          <div className="col">
+            <p>Seeding / propagation advice is shown here </p>
+          </div>
         </div>
       </div>
     );
