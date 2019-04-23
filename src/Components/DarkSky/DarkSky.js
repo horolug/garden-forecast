@@ -5,21 +5,30 @@ class CallDarkSky extends React.Component {
     super(props);
     this.state = { apiResponse: "" };
   }
+
+  responseFormat( response ){
+    const formatted = JSON.parse(response);
+    console.log("response is", formatted.data);
+    this.setState({
+      apiResponse: response,
+      currentTemp: formatted.data.currently.temperature
+    });
+  }
+
   callAPI() {
-      fetch("http://localhost:9000/testAPI")
+    fetch("http://localhost:9000/testAPI")
           .then(res => res.text())
-          .then(res => this.setState({ apiResponse: res }));
+          .then(res => this.responseFormat(res) );
   }
   componentWillMount() {
-      this.callAPI();
+    this.callAPI();
   }
 
   render() {
     return (
       <div className="row">
         <div className="col">
-          <p>DarkSky API call component is loaded</p>
-          <p>Getting test response {this.state.apiResponse}</p>
+          <p>Current temperature is {this.state.currentTemp} </p>
         </div>
       </div>
     );
