@@ -37,7 +37,7 @@ class CallDarkSky extends React.Component {
 
   render() {
     const phaseList = this.state.moonPhases.map((item, index) => (
-      <li key={item} class="list-group-item"> {item} </li>
+      <li key={item} className="list-group-item"> {item} </li>
     ));
 
 
@@ -45,7 +45,7 @@ class CallDarkSky extends React.Component {
       <div className="row">
         <div className="col">
           <p>Current temperature is {this.state.currentTemp} </p>
-          <ul class="list-group list-group-horizontal">
+          <ul className="list-group list-group-horizontal">
             {phaseList}
           </ul>
         </div>

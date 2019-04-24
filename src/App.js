@@ -11,7 +11,7 @@ class App extends Component {
           <h1>Kalendorius </h1>
         </header>
 
-        <div className="main">
+        <div className="main container">
           <PlantSelector />
         </div>
 
