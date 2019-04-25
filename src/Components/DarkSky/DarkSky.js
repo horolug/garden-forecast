@@ -27,9 +27,9 @@ class CallDarkSky extends React.Component {
   }
 
   callAPI() {
-    fetch("http://localhost:9000/testAPI")
-          .then(res => res.text())
-          .then(res => this.responseFormat(res) );
+    // fetch("http://localhost:9000/testAPI")
+    //       .then(res => res.text())
+    //       .then(res => this.responseFormat(res) );
   }
   componentWillMount() {
     this.callAPI();

@@ -9,10 +9,10 @@ class DropDown extends React.Component {
 
   render() {
     const oprionList = this.props.options.map((item, index) => (
-      <option key={index}> {item} </option>
+      <option key={index} data-planttype={this.props.plantType}> {item} </option>
     ));
     return (
-      <select  className="custom-select">
+      <select  className="custom-select mb-4">
         {oprionList}
       </select>
     );
