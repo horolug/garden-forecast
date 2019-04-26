@@ -17,9 +17,7 @@ class CallDarkSky extends React.Component {
     for(let i=0; i < daily.length; i++){
       moonPhase.push( daily[i].moonPhase );
     }
-    //
-    console.log("moonpahse list", moonPhase);
-
+    
     this.setState({
       apiResponse: response,
       currentTemp: formatted.data.currently.temperature

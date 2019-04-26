@@ -12,14 +12,28 @@ class PlantSelector extends React.Component {
       rootPlants: ['carrots', 'radishes'],
       fruitPlants: ['tomatoes', 'pumpkins', 'bellpeppers', 'cucumbers'],
       seedPlants: ['spinach', 'lettuce'],
-      moonPhases: []
+      moonPhases: [],
+      plantName: '',
+      plantType: ''
     };
+    this.selectedPlant = this.selectedPlant.bind(this);
+
   }
 
   storeMoonPhases = (data) => {
     console.log("storeMoonPhases called");
     this.setState({
       moonPhases: data
+    });
+  }
+
+  selectedPlant (event) {
+    console.log("event", event.target.value);
+    console.log("event", event.target.id);
+
+    this.setState({
+      plantName:  event.target.value,
+      plantType: event.target.id
     });
   }
 
@@ -36,16 +50,19 @@ class PlantSelector extends React.Component {
             <p>Root</p>
             <DropDown
               plantType="root"
+              selectedPlant={(e) => this.selectedPlant(e)}
               options={this.state.rootPlants}
             />
             <p>Fruit</p>
             <DropDown
               plantType="fruit"
+              selectedPlant={(e) => this.selectedPlant(e)}
               options={this.state.fruitPlants}
             />
             <p>Seed</p>
             <DropDown
               plantType="seed"
+              selectedPlant={(e) => this.selectedPlant(e)}
               options={this.state.seedPlants}
             />
           </div>
