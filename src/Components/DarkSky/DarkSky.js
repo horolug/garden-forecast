@@ -22,9 +22,10 @@ class CallDarkSky extends React.Component {
 
     this.setState({
       apiResponse: response,
-      currentTemp: formatted.data.currently.temperature,
-      moonPhases: moonPhase
+      currentTemp: formatted.data.currently.temperature
     });
+
+    this.props.storeMoonPhases(moonPhase);
   }
 
   getForecast(e){
@@ -47,11 +48,11 @@ class CallDarkSky extends React.Component {
   render() {
     let weatherData = "";
     if (this.state.currentTemp){
-      const phaseList = this.state.moonPhases.map((item, index) => (
+      const phaseList = this.props.moonPhases.map((item, index) => (
         <li key={item} className="list-group-item"> {item} </li>
       ));
 
-      weatherData = <div className="col mt-4 mb-4">
+      weatherData = <div className="col mt-4">
         <p>Current temperature is {this.state.currentTemp} </p>
         <ul className="list-group list-group-horizontal">
           {phaseList}

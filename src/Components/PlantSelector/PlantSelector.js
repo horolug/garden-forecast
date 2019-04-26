@@ -11,16 +11,27 @@ class PlantSelector extends React.Component {
       plantOptions: [ 'carrots', 'tomatoes', 'cucumbers', 'pumpkins', 'bellpeppers' ],
       rootPlants: ['carrots', 'radishes'],
       fruitPlants: ['tomatoes', 'pumpkins', 'bellpeppers', 'cucumbers'],
-      seedPlants: ['spinach', 'lettuce']
+      seedPlants: ['spinach', 'lettuce'],
+      moonPhases: []
     };
+  }
+
+  storeMoonPhases = (data) => {
+    console.log("storeMoonPhases called");
+    this.setState({
+      moonPhases: data
+    });
   }
 
   render() {
     return (
       <div>
-        <CallDarkSky />
+        <CallDarkSky
+          storeMoonPhases={this.storeMoonPhases}
+          moonPhases={this.state.moonPhases}
+        />
         <div className="row">
-          <div className="col">
+          <div className="col mt-4">
             <p>Plant selection is happening here</p>
             <p>Root</p>
             <DropDown
@@ -38,7 +49,7 @@ class PlantSelector extends React.Component {
               options={this.state.seedPlants}
             />
           </div>
-          <div className="col">
+          <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
 
             <PlantAdvice />
