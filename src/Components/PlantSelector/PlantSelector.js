@@ -2,6 +2,7 @@ import React from 'react';
 import CallDarkSky from '../DarkSky/DarkSky';
 import DropDown from '../DropDown/DropDown';
 import PlantAdvice from '../PlantAdvice/PlantAdvice';
+import helpers from '../Helpers/Helpers';
 
 class PlantSelector extends React.Component {
 
@@ -22,6 +23,8 @@ class PlantSelector extends React.Component {
 
   storeMoonPhases = (data) => {
     console.log("storeMoonPhases called");
+
+    helpers.iDealConditions(data,  this.state.plantType);
     this.setState({
       moonPhases: data
     });
@@ -41,6 +44,7 @@ class PlantSelector extends React.Component {
     return (
       <div>
         <CallDarkSky
+          plantType={this.state.plantType}
           storeMoonPhases={this.storeMoonPhases}
           moonPhases={this.state.moonPhases}
         />
@@ -69,7 +73,9 @@ class PlantSelector extends React.Component {
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
 
-            <PlantAdvice />
+            <PlantAdvice
+              iDealConditions={helpers.iDealConditions(this.state.moonPhases, this.state.plantType)}
+             />
           </div>
         </div>
       </div>

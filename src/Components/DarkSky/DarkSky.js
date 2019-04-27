@@ -17,7 +17,7 @@ class CallDarkSky extends React.Component {
     for(let i=0; i < daily.length; i++){
       moonPhase.push( daily[i].moonPhase );
     }
-    
+
     this.setState({
       apiResponse: response,
       currentTemp: formatted.data.currently.temperature
@@ -62,6 +62,7 @@ class CallDarkSky extends React.Component {
       <div className="row">
         <div className="col">
           <button
+            disabled={(this.props.plantType === "" ) ? true : false }
             onClick={(e)=>this.getForecast(e)}
             className="btn btn-primary btn-lg">Get forecast</button>
         </div>
