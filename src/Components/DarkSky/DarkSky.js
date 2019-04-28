@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 class CallDarkSky extends React.Component {
   constructor(props) {
@@ -13,16 +14,20 @@ class CallDarkSky extends React.Component {
     console.log("response is", formatted.data);
 
     let moonPhase = [];
+    let days = [];
 
     for(let i=0; i < daily.length; i++){
-      moonPhase.push( daily[i].moonPhase );
+      // console.log("formated day value", moment.unix(daily[i].time ).format("YYYY-MM-DD") );
+      moonPhase.push({
+        phase: daily[i].moonPhase,
+        date: moment.unix(daily[i].time ).format("YYYY-MM-DD")
+      });
     }
 
     this.setState({
       apiResponse: response,
       currentTemp: formatted.data.currently.temperature
     });
-
     this.props.storeMoonPhases(moonPhase);
   }
 
@@ -33,28 +38,11 @@ class CallDarkSky extends React.Component {
           .then(res => this.responseFormat(res) );
   }
 
-  callAPI() {
-    // fetch("http://localhost:9000/testAPI")
-    //       .then(res => res.text())
-    //       .then(res => this.responseFormat(res) );
-  }
-
-  componentWillMount() {
-    this.callAPI();
-  }
-
   render() {
     let weatherData = "";
     if (this.state.currentTemp){
-      const phaseList = this.props.moonPhases.map((item, index) => (
-        <li key={item} className="list-group-item"> {item} </li>
-      ));
-
       weatherData = <div className="col mt-4">
         <p>Current temperature is {this.state.currentTemp} </p>
-        <ul className="list-group list-group-horizontal">
-          {phaseList}
-        </ul>
       </div>
     }
 

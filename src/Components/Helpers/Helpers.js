@@ -16,26 +16,30 @@ const helpers = {
     let dayList = [];
 
     for( let i=0; i < phases.length; i++ ){
-      if ( phases[i] <= 25 ) {
+      if ( phases[i].phase <= 25 ) {
         // New moon - good for seed type
         if ( plantType === "seed" ){
           conditionLabel = "optimal"
         }
-      } else if( (phases[i] > 25) && (phases[i] < 50) ){
+      } else if( (phases[i].phase > 25) && (phases[i].phase < 50) ){
         // 2nd quarter - good for fruit type
         if ( plantType === "fruit" ){
           conditionLabel = "optimal"
         }
-      } else if ((phases[i] >= 50) && (phases[i] <= 75)){
+      } else if ((phases[i].phase >= 50) && (phases[i].phase <= 75)){
         // Full moon - good for roots
         if ( plantType === "root" ){
           conditionLabel = "optimal"
         }
       }
 
-      dayList.push( { phase: phases[i], condition: conditionLabel } );
+      dayList.push({
+        phase: phases[i].phase,
+        condition: conditionLabel,
+        date:phases[i].date
+      });
     }
-    // console.log("returning", dayList);
+    console.log("returning", dayList);
     return dayList;
   },
 
