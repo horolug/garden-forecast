@@ -22,9 +22,6 @@ class PlantSelector extends React.Component {
   }
 
   storeMoonPhases = (data) => {
-    console.log("storeMoonPhases called");
-
-    helpers.iDealConditions(data,  this.state.plantType);
     this.setState({
       moonPhases: data
     });

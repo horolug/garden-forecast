@@ -8,8 +8,6 @@ class PlantAdvice extends React.Component {
 
   render() {
     const conditions =  this.props.iDealConditions;
-    // const conditionList = "";
-    console.log("conditions", conditions);
     let conditionList = "";
     if ( conditions !== false ){
       conditionList = conditions.map((item, index) => (
