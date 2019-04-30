@@ -1,4 +1,6 @@
 import React from 'react';
+import PlantingCalendar from '../Calendar/Calendar';
+
 
 class PlantAdvice extends React.Component {
 
@@ -17,10 +19,7 @@ class PlantAdvice extends React.Component {
     return (
       <div>
         <ul className="list-group"> {conditionList} </ul>
-        <ul className="list-group">
-          <li className="list-group-item">Otimal direct Plant date range [Date range to be calculated] </li>
-          <li className="list-group-item">Optimal Propagation date range [Date range to be calculated]</li>
-        </ul>
+        <PlantingCalendar />
       </div>
 
     );

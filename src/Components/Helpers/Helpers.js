@@ -2,6 +2,20 @@ import moment from 'moment'
 
 const helpers = {
 
+  nexTIdealConditions( currentMoonphase,  plantType ){
+    // Take current day as start date
+    // Loop throug moonphases until ideal conditions are shown
+
+    let conditionLabel = "not optimal";
+    const startDay = moment().format("YYYY-MM-DD"));
+    const moonPhaseStep = (1 / 0.295305882)/100; //how moonphase changes on daily basis
+    console.log("plant type is", plantType);
+    console.log("today is", startDay);
+    console.log("currentMoonphase", currentMoonphase);
+
+
+  },
+
   iDealConditions( phases, plantType){
     // Plant type will have values varying from 1 to 3
     // seed - Seeds outside fruit - New Moon
@@ -10,7 +24,7 @@ const helpers = {
     if( phases.length === 0 || plantType === "" ){
       return false;
     }
-    let conditionLabel = "not optimal"
+    let conditionLabel = "not optimal";
     let dayList = [];
 
     for( let i=0; i < phases.length; i++ ){
@@ -38,7 +52,7 @@ const helpers = {
       });
     }
     this.moonPhaseCalendar(phases[0].phase, phases[0].date);
-
+    this.nexTIdealConditions(phases[0].phase, plantType);
     return dayList;
   },
 
@@ -56,7 +70,7 @@ const helpers = {
     // 1 day is approximately 0.0338983050 points
 
     // Fixme - need to update formula, to match API response
-    const moonPhaseStep = (1 / 0.295)/100;
+    const moonPhaseStep = (1 / 0.295305882)/100;
     console.log('moonPhaseToday', moonPhaseToday);
     console.log('todayDate', todayDate);
 
