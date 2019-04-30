@@ -7,7 +7,7 @@ const helpers = {
     // Loop throug moonphases until ideal conditions are shown
 
     let conditionLabel = "not optimal";
-    const startDay = moment().format("YYYY-MM-DD"));
+    const startDay = moment().format("YYYY-MM-DD");
     const moonPhaseStep = (1 / 0.295305882)/100; //how moonphase changes on daily basis
     console.log("plant type is", plantType);
     console.log("today is", startDay);
