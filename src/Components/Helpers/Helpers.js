@@ -2,6 +2,32 @@ import moment from 'moment'
 
 const helpers = {
 
+  matchConditions( phase, plantType ){
+    let conditionLabel = "not optimal";
+    console.log("plantType", plantType);
+
+    if ( phase <= 0.25 ) {
+      // New moon - good for seed type
+      if ( plantType === "seed" ){
+        conditionLabel = "optimal"
+      }
+    } else if( (phase > 0.25) && (phase < 0.50) ){
+      // 2nd quarter - good for fruit type
+      if ( plantType === "fruit" ){
+        conditionLabel = "optimal"
+      }
+    } else if ( (phase >= 0.50) && (phase <= 0.75)){
+      // Full moon - good for roots
+      if ( plantType === "root" ){
+        conditionLabel = "optimal"
+      }
+    }
+    console.log("matchConditions was called");
+    console.log("conditionLabel is", conditionLabel);
+
+    return conditionLabel;
+  },
+
   nexTIdealConditions( currentMoonphase,  plantType ){
     // Take current day as start date
     // Loop throug moonphases until ideal conditions are shown
@@ -9,11 +35,25 @@ const helpers = {
     let conditionLabel = "not optimal";
     const startDay = moment().format("YYYY-MM-DD");
     const moonPhaseStep = (1 / 0.295305882)/100; //how moonphase changes on daily basis
+    let moonPhase = this.formatMoonPhase( currentMoonphase );
+    const daysInFuture = 60;
+    console.log("moonPhaseStep", moonPhaseStep);
+    console.log("conditionLabel", conditionLabel);
+    console.log("currentMoonphase", currentMoonphase);
+    moonPhase = moonPhase + moonPhaseStep;
+    console.log("sum is", moonPhase );
+
+    for ( let i = 0; i<daysInFuture; i++ ){
+      conditionLabel = this.matchConditions(moonPhase, plantType);
+      moonPhase = this.formatMoonPhase( moonPhase + moonPhaseStep);
+      console.log("day", i);
+      console.log("phase value", moonPhase);
+      console.log("condition label", conditionLabel) ;
+    }
+
     console.log("plant type is", plantType);
     console.log("today is", startDay);
     console.log("currentMoonphase", currentMoonphase);
-
-
   },
 
   iDealConditions( phases, plantType){
