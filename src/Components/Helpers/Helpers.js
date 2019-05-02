@@ -4,7 +4,7 @@ const helpers = {
 
   matchConditions( phase, plantType ){
     let conditionLabel = "not optimal";
-    console.log("plantType", plantType);
+    // console.log("plantType", plantType);
 
     if ( phase <= 0.25 ) {
       // New moon - good for seed type
@@ -22,77 +22,37 @@ const helpers = {
         conditionLabel = "optimal"
       }
     }
-    console.log("matchConditions was called");
-    console.log("conditionLabel is", conditionLabel);
 
     return conditionLabel;
   },
 
-  nexTIdealConditions( currentMoonphase,  plantType ){
+  nextIdealConditions( currentMoonphase,  plantType ){
     // Take current day as start date
     // Loop throug moonphases until ideal conditions are shown
-
+    if( currentMoonphase.length === 0 || plantType === "" ){
+      return false;
+    }
+    let dayList = [];
     let conditionLabel = "not optimal";
+    let dayInQuestion = moment().format("YYYY-MM-DD");
+    let moonPhase = this.formatMoonPhase( currentMoonphase );
     const startDay = moment().format("YYYY-MM-DD");
     const moonPhaseStep = (1 / 0.295305882)/100; //how moonphase changes on daily basis
-    let moonPhase = this.formatMoonPhase( currentMoonphase );
     const daysInFuture = 60;
-    console.log("moonPhaseStep", moonPhaseStep);
-    console.log("conditionLabel", conditionLabel);
-    console.log("currentMoonphase", currentMoonphase);
-    moonPhase = moonPhase + moonPhaseStep;
-    console.log("sum is", moonPhase );
 
     for ( let i = 0; i<daysInFuture; i++ ){
       conditionLabel = this.matchConditions(moonPhase, plantType);
       moonPhase = this.formatMoonPhase( moonPhase + moonPhaseStep);
-      console.log("day", i);
-      console.log("phase value", moonPhase);
-      console.log("condition label", conditionLabel) ;
-    }
-
-    console.log("plant type is", plantType);
-    console.log("today is", startDay);
-    console.log("currentMoonphase", currentMoonphase);
-  },
-
-  iDealConditions( phases, plantType){
-    // Plant type will have values varying from 1 to 3
-    // seed - Seeds outside fruit - New Moon
-    // fruit - Fruit above ground ( tomatoe cucumber ) - 2nd Quarter Moon
-    // root - Root plant (beetroot, carrot) - Full Moon
-    if( phases.length === 0 || plantType === "" ){
-      return false;
-    }
-    let conditionLabel = "not optimal";
-    let dayList = [];
-
-    for( let i=0; i < phases.length; i++ ){
-      if ( phases[i].phase <= 25 ) {
-        // New moon - good for seed type
-        if ( plantType === "seed" ){
-          conditionLabel = "optimal"
-        }
-      } else if( (phases[i].phase > 25) && (phases[i].phase < 50) ){
-        // 2nd quarter - good for fruit type
-        if ( plantType === "fruit" ){
-          conditionLabel = "optimal"
-        }
-      } else if ((phases[i].phase >= 50) && (phases[i].phase <= 75)){
-        // Full moon - good for roots
-        if ( plantType === "root" ){
-          conditionLabel = "optimal"
-        }
+      dayInQuestion = moment().add(i, 'days').format("YYYY-MM-DD");
+      if (conditionLabel === "optimal"){
+        dayList.push({
+          phase: moonPhase,
+          condition: conditionLabel,
+          date: dayInQuestion
+        });
       }
-
-      dayList.push({
-        phase: phases[i].phase,
-        condition: conditionLabel,
-        date:phases[i].date
-      });
     }
-    this.moonPhaseCalendar(phases[0].phase, phases[0].date);
-    this.nexTIdealConditions(phases[0].phase, plantType);
+    
     return dayList;
   },
 

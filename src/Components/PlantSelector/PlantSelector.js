@@ -38,6 +38,10 @@ class PlantSelector extends React.Component {
   }
 
   render() {
+    let moonPhaseToday = "";
+    if (this.state.moonPhases.length > 0){
+      moonPhaseToday = this.state.moonPhases[0].phase;
+    }
     return (
       <div>
         <CallDarkSky
@@ -71,7 +75,7 @@ class PlantSelector extends React.Component {
             <p>Seeding / propagation advice is shown here </p>
 
             <PlantAdvice
-              iDealConditions={helpers.iDealConditions(this.state.moonPhases, this.state.plantType)}
+              iDealConditions={helpers.nextIdealConditions(moonPhaseToday, this.state.plantType)}
              />
           </div>
         </div>
