@@ -1,7 +1,11 @@
 import moment from 'moment'
 
 const helpers = {
-
+  truncateDecimal(num){
+    num = num.toString(); //If it's not already a String
+    num = num.slice(0, (num.indexOf("."))+3); //Wi  th 3 exposing the hundredths place
+    return Number(num); //If you need it back as a Number
+  },
   matchConditions( phase, plantType ){
     let conditionLabel = "not optimal";
     // console.log("plantType", plantType);
@@ -52,7 +56,7 @@ const helpers = {
         });
       }
     }
-    
+
     return dayList;
   },
 
@@ -63,19 +67,35 @@ const helpers = {
     return value
   },
 
-  moonPhaseCalendar( moonPhaseToday, todayDate ){
+  moonPhaseCalendar(){
+    // Fixme - accept dates as a parameter
+    // Fixme - need a dynamic way to determine new moon based on location  (time machne call to API?)
     // A new moon occurs every 29.5 days
-    // Dark Sky API returns 0-100 values for lunar phases
-    // 0.01 point represents 0.295 days
-    // 1 day is approximately 0.0338983050 points
+    // New moon April 5, 2019 In Vilnius, Lithuania
+    const newMoonStart =  2458578.5;
 
-    // Fixme - need to update formula, to match API response
-    const moonPhaseStep = (1 / 0.295305882)/100;
-    console.log('moonPhaseToday', moonPhaseToday);
-    console.log('todayDate', todayDate);
+    let yerInQuestion = parseInt( moment().format("YYYY") );
+    let monthInQuestion = parseInt( moment().format("MM") );
 
-    console.log("moonPhase in 7 days", this.formatMoonPhase( moonPhaseToday+(moonPhaseStep*6)) );
-    console.log("moonPhase in 8 days", this.formatMoonPhase(moonPhaseToday+(moonPhaseStep*7)) );
+    if ( monthInQuestion === 1 || monthInQuestion === 2){
+      yerInQuestion = yerInQuestion - 1;
+      monthInQuestion = monthInQuestion + 12;
+    }
+
+    const dayInQuestion = parseInt( moment().format("DD") );
+    const yearIndex = Math.trunc( yerInQuestion / 100);
+    const monthIndex = Math.trunc( yearIndex / 4);
+    const dayIndex = 2-yearIndex+monthIndex;
+    const dayLapse = Math.trunc( 365.25 * (yerInQuestion+4716) );
+    const cycleLapse = Math.trunc( 30.6001 * (monthInQuestion+1) );
+    const julianDays = dayIndex + dayInQuestion + dayLapse + cycleLapse - 1524.5;
+    const daySinceNew = julianDays - newMoonStart;
+    const newMoons = daySinceNew / 29.5;
+
+    const currentMoonphase = this.truncateDecimal (newMoons - Math.floor(newMoons) );
+
+    console.log("currentMoonphase", currentMoonphase);
+    return currentMoonphase;
   },
 
   foo( bar ){

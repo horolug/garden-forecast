@@ -42,6 +42,7 @@ class PlantSelector extends React.Component {
     if (this.state.moonPhases.length > 0){
       moonPhaseToday = this.state.moonPhases[0].phase;
     }
+    helpers.moonPhaseCalendar();
     return (
       <div>
         <CallDarkSky
