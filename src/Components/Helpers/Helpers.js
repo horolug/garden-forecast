@@ -39,15 +39,14 @@ const helpers = {
     let dayList = [];
     let conditionLabel = "not optimal";
     let dayInQuestion = moment().format("YYYY-MM-DD");
-    let moonPhase = this.formatMoonPhase( currentMoonphase );
-    const startDay = moment().format("YYYY-MM-DD");
-    const moonPhaseStep = (1 / 0.295305882)/100; //how moonphase changes on daily basis
+    let moonPhase = this.moonPhaseCalendar( dayInQuestion );
     const daysInFuture = 60;
 
     for ( let i = 0; i<daysInFuture; i++ ){
       conditionLabel = this.matchConditions(moonPhase, plantType);
-      moonPhase = this.formatMoonPhase( moonPhase + moonPhaseStep);
       dayInQuestion = moment().add(i, 'days').format("YYYY-MM-DD");
+      moonPhase = this.moonPhaseCalendar(dayInQuestion);
+
       if (conditionLabel === "optimal"){
         dayList.push({
           phase: moonPhase,
@@ -60,29 +59,20 @@ const helpers = {
     return dayList;
   },
 
-  formatMoonPhase( value ){
-    if(value > 1){
-      return value-1;
-    }
-    return value
-  },
-
-  moonPhaseCalendar(){
+  moonPhaseCalendar( date ){
     // Fixme - accept dates as a parameter
     // Fixme - need a dynamic way to determine new moon based on location  (time machne call to API?)
     // A new moon occurs every 29.5 days
     // New moon April 5, 2019 In Vilnius, Lithuania
     const newMoonStart =  2458578.5;
-
-    let yerInQuestion = parseInt( moment().format("YYYY") );
-    let monthInQuestion = parseInt( moment().format("MM") );
-
+    let yerInQuestion = parseInt( moment(date).format("YYYY") );
+    let monthInQuestion = parseInt( moment(date).format("MM") );
     if ( monthInQuestion === 1 || monthInQuestion === 2){
       yerInQuestion = yerInQuestion - 1;
       monthInQuestion = monthInQuestion + 12;
     }
 
-    const dayInQuestion = parseInt( moment().format("DD") );
+    const dayInQuestion = parseInt( moment(date).format("DD") );
     const yearIndex = Math.trunc( yerInQuestion / 100);
     const monthIndex = Math.trunc( yearIndex / 4);
     const dayIndex = 2-yearIndex+monthIndex;
@@ -91,10 +81,8 @@ const helpers = {
     const julianDays = dayIndex + dayInQuestion + dayLapse + cycleLapse - 1524.5;
     const daySinceNew = julianDays - newMoonStart;
     const newMoons = daySinceNew / 29.5;
-
     const currentMoonphase = this.truncateDecimal (newMoons - Math.floor(newMoons) );
 
-    console.log("currentMoonphase", currentMoonphase);
     return currentMoonphase;
   },
 
