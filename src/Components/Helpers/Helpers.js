@@ -60,7 +60,6 @@ const helpers = {
   },
 
   moonPhaseCalendar( date ){
-    // Fixme - accept dates as a parameter
     // Fixme - need a dynamic way to determine new moon based on location  (time machne call to API?)
     // A new moon occurs every 29.5 days
     // New moon April 5, 2019 In Vilnius, Lithuania

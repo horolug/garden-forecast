@@ -51,20 +51,28 @@ class PlantSelector extends React.Component {
           moonPhases={this.state.moonPhases}
         />
         <div className="row">
-          <div className="col mt-4">
-            <p>Plant selection is happening here</p>
+          <div className="col mt-4 mb-4">
+            <h3>Plant selection</h3>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
             <p>Root</p>
             <DropDown
               plantType="root"
               selectedPlant={(e) => this.selectedPlant(e)}
               options={this.state.rootPlants}
             />
+          </div>
+          <div className="col">
             <p>Fruit</p>
             <DropDown
               plantType="fruit"
               selectedPlant={(e) => this.selectedPlant(e)}
               options={this.state.fruitPlants}
             />
+          </div>
+          <div className="col">
             <p>Seed</p>
             <DropDown
               plantType="seed"
@@ -72,6 +80,10 @@ class PlantSelector extends React.Component {
               options={this.state.seedPlants}
             />
           </div>
+
+        </div>
+
+        <div className="row" >
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
 
