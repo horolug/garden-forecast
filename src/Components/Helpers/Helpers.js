@@ -7,33 +7,33 @@ const helpers = {
     return Number(num); //If you need it back as a Number
   },
   matchConditions( phase, plantType ){
-    let conditionLabel = "not optimal";
+    let conditionLabel = false;
     // console.log("plantType", plantType);
 
     if ( phase <= 0.25 ) {
       // New moon - good for seed type
       if ( plantType === "seed" ){
-        conditionLabel = "optimal"
+        conditionLabel = true
       }
     } else if( (phase > 0.25) && (phase < 0.50) ){
       // 2nd quarter - good for fruit type
       if ( plantType === "fruit" ){
-        conditionLabel = "optimal"
+        conditionLabel = true
       }
     } else if ( (phase >= 0.50) && (phase <= 0.75)){
       // Full moon - good for roots
       if ( plantType === "root" ){
-        conditionLabel = "optimal"
+        conditionLabel = true
       }
     }
 
     return conditionLabel;
   },
 
-  nextIdealConditions( currentMoonphase,  plantType ){
+  nextIdealConditions( plantType ){
     // Take current day as start date
     // Loop throug moonphases until ideal conditions are shown
-    if( currentMoonphase.length === 0 || plantType === "" ){
+    if( plantType === "" ){
       return false;
     }
     let dayList = [];
@@ -57,6 +57,18 @@ const helpers = {
     }
 
     return dayList;
+  },
+
+  isOptimalForPlanting( date, plantType ){
+    if ( plantType == null ){
+      return false;
+    }
+
+    const dayInQuestion = moment(date).format("YYYY-MM-DD");
+    const moonPhase = this.moonPhaseCalendar( dayInQuestion );
+    const conditionLabel = this.matchConditions(moonPhase, plantType);
+
+    return conditionLabel;
   },
 
   moonPhaseCalendar( date ){
@@ -83,6 +95,25 @@ const helpers = {
     const currentMoonphase = this.truncateDecimal (newMoons - Math.floor(newMoons) );
 
     return currentMoonphase;
+  },
+
+  monthDays( plantType ){
+    if (plantType == null || plantType === ""  ){
+      return false;
+    }
+
+    const startOfMonth = moment().startOf("month").format("YYYY-MM-DD");
+    let dayList = [];
+
+    for ( let i = 0; i < moment().daysInMonth(); i++ ){
+      const givenDay = moment(startOfMonth).add(i, 'days').format("YYYY-MM-DD");
+      const isOptimal = this.isOptimalForPlanting(givenDay, plantType);
+      dayList.push({
+        date: givenDay,
+        optimal: isOptimal
+      });
+    }
+    return dayList;
   },
 
   foo( bar ){

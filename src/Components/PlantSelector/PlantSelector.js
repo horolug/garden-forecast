@@ -1,7 +1,7 @@
 import React from 'react';
 import CallDarkSky from '../DarkSky/DarkSky';
 import DropDown from '../DropDown/DropDown';
-import PlantAdvice from '../PlantAdvice/PlantAdvice';
+import PlantingCalendar from '../Calendar/Calendar';
 import helpers from '../Helpers/Helpers';
 
 class PlantSelector extends React.Component {
@@ -13,9 +13,8 @@ class PlantSelector extends React.Component {
       rootPlants: ['carrots', 'radishes'],
       fruitPlants: ['tomatoes', 'pumpkins', 'bellpeppers', 'cucumbers'],
       seedPlants: ['spinach', 'lettuce'],
-      moonPhases: [],
       plantName: '',
-      plantType: ''
+      plantType: '',
     };
     this.selectedPlant = this.selectedPlant.bind(this);
 
@@ -30,25 +29,20 @@ class PlantSelector extends React.Component {
   selectedPlant (event) {
     console.log("event", event.target.value);
     console.log("event", event.target.id);
-
+    console.log("moon calendar", helpers.moonPhaseCalendar());
     this.setState({
-      plantName:  event.target.value,
-      plantType: event.target.id
+      plantName: event.target.value,
+      plantType: event.target.id,
     });
   }
 
   render() {
     let moonPhaseToday = "";
-    if (this.state.moonPhases.length > 0){
-      moonPhaseToday = this.state.moonPhases[0].phase;
-    }
-    helpers.moonPhaseCalendar();
     return (
       <div>
         <CallDarkSky
           plantType={this.state.plantType}
           storeMoonPhases={this.storeMoonPhases}
-          moonPhases={this.state.moonPhases}
         />
         <div className="row">
           <div className="col mt-4 mb-4">
@@ -87,9 +81,10 @@ class PlantSelector extends React.Component {
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
 
-            <PlantAdvice
-              iDealConditions={helpers.nextIdealConditions(moonPhaseToday, this.state.plantType)}
-             />
+           <PlantingCalendar
+             storeMonthDates={this.storeMonthDates}
+             dayList={helpers.monthDays(this.state.plantType)}
+            />
           </div>
         </div>
       </div>

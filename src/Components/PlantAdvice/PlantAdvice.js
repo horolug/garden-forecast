@@ -19,7 +19,9 @@ class PlantAdvice extends React.Component {
     return (
       <div>
         <ul className="list-group"> {conditionList} </ul>
-        <PlantingCalendar />
+        <PlantingCalendar
+          optimalDates={conditions}
+         />
       </div>
 
     );

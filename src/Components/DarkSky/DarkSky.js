@@ -17,7 +17,6 @@ class CallDarkSky extends React.Component {
     let days = [];
 
     for(let i=0; i < daily.length; i++){
-      // console.log("formated day value", moment.unix(daily[i].time ).format("YYYY-MM-DD") );
       moonPhase.push({
         phase: daily[i].moonPhase,
         date: moment.unix(daily[i].time ).format("YYYY-MM-DD")
@@ -28,7 +27,7 @@ class CallDarkSky extends React.Component {
       apiResponse: response,
       currentTemp: formatted.data.currently.temperature
     });
-    this.props.storeMoonPhases(moonPhase);
+    // this.props.storeMoonPhases(moonPhase);
   }
 
   getForecast(e){
