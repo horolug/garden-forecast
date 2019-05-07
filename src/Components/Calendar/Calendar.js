@@ -17,7 +17,7 @@ class plantingCalendar extends React.Component {
     if ( firstDayOfMonth > 1 ){
       for ( let i = 1; i < firstDayOfMonth; i++ ){
         blankCells.push(
-          <td key={"blank"+i}>blank</td>
+          <div className="col-1" key={"blank"+i}></div>
         );
       }
     }
@@ -30,18 +30,17 @@ class plantingCalendar extends React.Component {
     this.createBlankCells();
     if ( !this.props.dayList ){
       for ( let i = 0; i < moment().daysInMonth(); i++ ){
-        listOfDays.push( <td key={i+1}> {i+1} </td>);
+        listOfDays.push( <div className="col-1" key={i+1}> {i+1}</div>);
       }
     } else {
       console.log("this.props.dayList.length", this.props.dayList.length);
       for ( let i = 0; i < this.props.dayList.length; i++ ){
-        const calendarDay = moment(this.props.dayList[i].date).format("DD");
-        const optimal = this.props.dayList[i].optimal ? "optimal" : "";
+        const calendarDay = moment(this.props.dayList[i].date).format("D");
+        const optimal = this.props.dayList[i].optimal ? "col-1 optimal" : "col-1";
         listOfDays.push(
-          <td key={this.props.dayList[i].date}>
-            <p> {calendarDay} </p>
-            <p> {optimal} </p>
-          </td>
+          <div className={optimal} key={this.props.dayList[i].date}>
+            {calendarDay}
+          </div>
         );
       }
     }
@@ -61,16 +60,16 @@ class plantingCalendar extends React.Component {
         tableRows.push(dayList[i]);
         if ( i === dayList.length -1 ){
           calendarTable.push(
-            <tr key={i}>
+            <div className="row" key={i}>
             {tableRows}
-            </tr>
+            </div>
           );
         }
       } else {
         calendarTable.push(
-          <tr key={i}>
+          <div className="row" key={i}>
           {tableRows}
-          </tr>
+          </div>
         );
         tableRows = [];
       }
@@ -83,18 +82,9 @@ class plantingCalendar extends React.Component {
     return (
       <div>
         <p>Calendar was called</p>
-        <table>
-          <thead>
-            <tr>
-
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.calendarTable}
-            {this.createTableRows()}
-
-          </tbody>
-        </table>
+        <div className="container">
+          {this.createTableRows()}
+        </div>
       </div>
     );
   }
