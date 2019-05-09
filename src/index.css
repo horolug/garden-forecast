@@ -16,3 +16,8 @@ code {
 .optimal{
   background: #00F000;
 }
+
+
+.calendarDay{
+  width: calc(100% / 7);
+}
