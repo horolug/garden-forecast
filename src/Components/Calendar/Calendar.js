@@ -36,7 +36,6 @@ class plantingCalendar extends React.Component {
         listOfDays.push( <div className="calendarDay" key={i+1}> {i+1}</div>);
       }
     } else {
-      console.log("this.props.dayList.length", this.props.dayList.length);
       for ( let i = 0; i < this.props.dayList.length; i++ ){
         const calendarDay = moment(this.props.dayList[i].date).format("D");
         const optimal = this.props.dayList[i].optimal ? "calendarDay optimal" : "calendarDay";
@@ -53,16 +52,12 @@ class plantingCalendar extends React.Component {
 
   createTableRows(){
     const dayList = this.createDayCells();
-    console.log("dayList", dayList);
     let calendarTable = [];
     let tableRows = [];
     const otherCalendarTable = dayList.map((val, i, arr) => {
-      // console.log("i value from map", i);
-      // console.log("val, value from map", val.key);
 
       if ( tableRows.length < 7){
         tableRows.push(dayList[i]);
-        console.log("pushing", dayList[i]);
         if ( i === dayList.length - 1 ){
           calendarTable.push(
             <div className="row" key={i}>
@@ -103,12 +98,10 @@ class plantingCalendar extends React.Component {
       );
     });
 
-    // console.log("weekdays are", moment.weekdays());
     return weekdays;
   }
 
   render() {
-    console.log("received from parent", this.props.dayList);
     return (
       <div>
         <p>Calendar was called</p>

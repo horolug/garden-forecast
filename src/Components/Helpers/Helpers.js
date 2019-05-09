@@ -8,7 +8,6 @@ const helpers = {
   },
   matchConditions( phase, plantType ){
     let conditionLabel = false;
-    // console.log("plantType", plantType);
 
     if ( phase <= 0.25 ) {
       // New moon - good for seed type

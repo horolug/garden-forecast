@@ -27,9 +27,6 @@ class PlantSelector extends React.Component {
   }
 
   selectedPlant (event) {
-    console.log("event", event.target.value);
-    console.log("event", event.target.id);
-    console.log("moon calendar", helpers.moonPhaseCalendar());
     this.setState({
       plantName: event.target.value,
       plantType: event.target.id,
