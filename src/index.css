@@ -21,3 +21,7 @@ code {
 .calendarDay{
   width: calc(100% / 7);
 }
+
+.currentDay{
+  border: 1px solid green;
+}

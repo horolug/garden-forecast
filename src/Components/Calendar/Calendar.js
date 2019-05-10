@@ -33,12 +33,16 @@ class plantingCalendar extends React.Component {
     this.createBlankCells();
     if ( !this.props.dayList ){
       for ( let i = 0; i < moment().daysInMonth(); i++ ){
-        listOfDays.push( <div className="calendarDay" key={i+1}> {i+1}</div>);
+        listOfDays.push( <div className={this.currentDay(i+1)} key={i+1}> {i+1}</div>);
       }
     } else {
       for ( let i = 0; i < this.props.dayList.length; i++ ){
         const calendarDay = moment(this.props.dayList[i].date).format("D");
-        const optimal = this.props.dayList[i].optimal ? "calendarDay optimal" : "calendarDay";
+        let optimal = "calendarDay";
+        if (this.props.dayList[i].optimal){
+          optimal = "calendarDay optimal";
+        }
+        optimal = optimal +" "+ this.currentDay(calendarDay);
         listOfDays.push(
           <div className={optimal} key={this.props.dayList[i].date}>
             {calendarDay}
@@ -94,11 +98,20 @@ class plantingCalendar extends React.Component {
     let weekdays = [];
     weekdaysArray.map((val, i, arr) => {
       weekdays.push(
-        <div className="calendarDay" key={val}>{val}</div>
+        <div className={this.currentDay(val)} key={val}>{val}</div>
       );
     });
 
     return weekdays;
+  }
+
+  currentDay( dayInQuestion ){
+    let currentDay = "calendarDay";
+    if ( parseInt(dayInQuestion) === parseInt( moment().format('D') ) ){
+      currentDay = "calendarDay currentDay";
+    }
+
+    return currentDay;
   }
 
   render() {
