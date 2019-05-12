@@ -58,8 +58,8 @@ class plantingCalendar extends React.Component {
     const dayList = this.createDayCells();
     let calendarTable = [];
     let tableRows = [];
-    const otherCalendarTable = dayList.map((val, i, arr) => {
-
+    
+    for( let i = 0; i <dayList.length; i++ ){
       if ( tableRows.length < 7){
         tableRows.push(dayList[i]);
         if ( i === dayList.length - 1 ){
@@ -78,7 +78,7 @@ class plantingCalendar extends React.Component {
         tableRows = [];
         tableRows.push(dayList[i]);
       }
-    });
+    }
     return calendarTable;
   }
 
@@ -95,11 +95,8 @@ class plantingCalendar extends React.Component {
   createWeekDays(){
     const weekdaysArray = moment.weekdaysShort();
     weekdaysArray.push(weekdaysArray.shift());
-    let weekdays = [];
-    weekdaysArray.map((val, i, arr) => {
-      weekdays.push(
-        <div className={this.currentDay(val)} key={val}>{val}</div>
-      );
+    const weekdays = weekdaysArray.map((val, i, arr) => {
+      return <div className={this.currentDay(val)} key={val}>{val}</div>;
     });
 
     return weekdays;

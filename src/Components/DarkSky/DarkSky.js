@@ -14,7 +14,6 @@ class CallDarkSky extends React.Component {
     console.log("response is", formatted.data);
 
     let moonPhase = [];
-    let days = [];
 
     for(let i=0; i < daily.length; i++){
       moonPhase.push({

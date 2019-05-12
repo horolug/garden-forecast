@@ -34,7 +34,6 @@ class PlantSelector extends React.Component {
   }
 
   render() {
-    let moonPhaseToday = "";
     return (
       <div>
         <CallDarkSky

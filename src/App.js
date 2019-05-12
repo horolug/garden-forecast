@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import PlantSelector from './Components/PlantSelector/PlantSelector';
 import './App.css';
 
