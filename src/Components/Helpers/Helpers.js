@@ -96,15 +96,14 @@ const helpers = {
     return currentMoonphase;
   },
 
-  monthDays( plantType ){
+  monthDays( plantType, month ){
     if (plantType == null || plantType === ""  ){
       return false;
     }
-
-    const startOfMonth = moment().startOf("month").format("YYYY-MM-DD");
+    const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
     let dayList = [];
 
-    for ( let i = 0; i < moment().daysInMonth(); i++ ){
+    for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
       const givenDay = moment(startOfMonth).add(i, 'days').format("YYYY-MM-DD");
       const isOptimal = this.isOptimalForPlanting(givenDay, plantType);
       dayList.push({

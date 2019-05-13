@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment'
 import CallDarkSky from '../DarkSky/DarkSky';
 import DropDown from '../DropDown/DropDown';
 import PlantingCalendar from '../Calendar/Calendar';
@@ -15,6 +16,7 @@ class PlantSelector extends React.Component {
       seedPlants: ['spinach', 'lettuce'],
       plantName: '',
       plantType: '',
+      currentMonth: moment("2019-07-01").format("YYYY-MM-DD"),
     };
     this.selectedPlant = this.selectedPlant.bind(this);
 
@@ -79,7 +81,8 @@ class PlantSelector extends React.Component {
 
            <PlantingCalendar
              storeMonthDates={this.storeMonthDates}
-             dayList={helpers.monthDays(this.state.plantType)}
+             monthInQuestion={this.state.currentMonth}
+             dayList={helpers.monthDays(this.state.plantType, this.state.currentMonth )}
             />
           </div>
         </div>

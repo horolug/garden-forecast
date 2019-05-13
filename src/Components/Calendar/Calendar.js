@@ -8,13 +8,11 @@ class plantingCalendar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      days: this.createDayCells(),
-    };
+    this.state = {};
   }
 
-  createBlankCells( ){
-    const startOfMonth = moment().startOf("month").format("YYYY-MM-DD");
+  createBlankCells( month ){
+    const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
     const firstDayOfMonth = moment(startOfMonth).isoWeekday();
     let blankCells = [];
     if ( firstDayOfMonth > 1 ){
@@ -28,16 +26,17 @@ class plantingCalendar extends React.Component {
     return blankCells;
   }
 
-  createDayCells(){
-    let listOfDays = this.createBlankCells();
-    this.createBlankCells();
+  createDayCells(month){
+    let listOfDays = this.createBlankCells( month );
     if ( !this.props.dayList ){
-      for ( let i = 0; i < moment().daysInMonth(); i++ ){
-        listOfDays.push( <div className={this.currentDay(i+1)} key={i+1}> {i+1}</div>);
+      for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
+        const startOfMonth =  moment(month).startOf("month").format("YYYY-MM");
+        const dateInQuestion = moment(startOfMonth+"-"+(i+1)).format("YYYY-MM-DD");
+        listOfDays.push( <div className={this.currentDay(dateInQuestion)} key={i+1}> {i+1}</div>);
       }
     } else {
       for ( let i = 0; i < this.props.dayList.length; i++ ){
-        const calendarDay = moment(this.props.dayList[i].date).format("D");
+        const calendarDay = moment(this.props.dayList[i].date).format("YYYY-MM-DD");
         let optimal = "calendarDay";
         if (this.props.dayList[i].optimal){
           optimal = "calendarDay optimal";
@@ -54,11 +53,11 @@ class plantingCalendar extends React.Component {
     return listOfDays;
   }
 
-  createTableRows(){
-    const dayList = this.createDayCells();
+  createTableRows(month){
+    const dayList = this.createDayCells(month);
     let calendarTable = [];
     let tableRows = [];
-    
+
     for( let i = 0; i <dayList.length; i++ ){
       if ( tableRows.length < 7){
         tableRows.push(dayList[i]);
@@ -82,10 +81,10 @@ class plantingCalendar extends React.Component {
     return calendarTable;
   }
 
-  createCalendarHeader(){
+  createCalendarHeader(month){
     const currentMonth = <div className="row">
       <div className="col">
-        {moment().format("MMMM")}
+        {moment(month).format("MMMM")}
       </div>
     </div>;
 
@@ -102,9 +101,9 @@ class plantingCalendar extends React.Component {
     return weekdays;
   }
 
-  currentDay( dayInQuestion ){
+  currentDay( dateInQuestion ){
     let currentDay = "calendarDay";
-    if ( parseInt(dayInQuestion) === parseInt( moment().format('D') ) ){
+    if ( dateInQuestion ===  moment().format("YYYY-MM-DD") ){
       currentDay = "calendarDay currentDay";
     }
 
@@ -116,9 +115,9 @@ class plantingCalendar extends React.Component {
       <div>
         <p>Calendar was called</p>
         <div className="container">
-          {this.createCalendarHeader()}
+          {this.createCalendarHeader(this.props.monthInQuestion)}
           <div className="row"> {this.createWeekDays()} </div>
-          {this.createTableRows()}
+          {this.createTableRows(this.props.monthInQuestion)}
         </div>
       </div>
     );
