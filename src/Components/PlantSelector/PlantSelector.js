@@ -16,6 +16,7 @@ class PlantSelector extends React.Component {
       seedPlants: ['spinach', 'lettuce'],
       plantName: '',
       plantType: '',
+      monthRange: ["2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01",],
       currentMonth: moment("2019-07-01").format("YYYY-MM-DD"),
     };
     this.selectedPlant = this.selectedPlant.bind(this);
@@ -36,6 +37,14 @@ class PlantSelector extends React.Component {
   }
 
   render() {
+    const monthList = this.state.monthRange.map((val, i, arr) => {
+     return <PlantingCalendar
+       key={val}
+       storeMonthDates={this.storeMonthDates}
+       monthInQuestion={val}
+       dayList={helpers.monthDays(this.state.plantType, val )}
+      />;
+    });
     return (
       <div>
         <CallDarkSky
@@ -79,11 +88,7 @@ class PlantSelector extends React.Component {
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
 
-           <PlantingCalendar
-             storeMonthDates={this.storeMonthDates}
-             monthInQuestion={this.state.currentMonth}
-             dayList={helpers.monthDays(this.state.plantType, this.state.currentMonth )}
-            />
+            {monthList}
           </div>
         </div>
       </div>

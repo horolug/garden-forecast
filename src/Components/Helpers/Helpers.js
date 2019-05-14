@@ -29,7 +29,7 @@ const helpers = {
     return conditionLabel;
   },
 
-  nextIdealConditions( plantType ){
+  nextIdealConditions( plantType, date ){
     // Take current day as start date
     // Loop throug moonphases until ideal conditions are shown
     if( plantType === "" ){
@@ -102,7 +102,6 @@ const helpers = {
     }
     const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
     let dayList = [];
-
     for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
       const givenDay = moment(startOfMonth).add(i, 'days').format("YYYY-MM-DD");
       const isOptimal = this.isOptimalForPlanting(givenDay, plantType);

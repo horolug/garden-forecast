@@ -36,7 +36,7 @@ class plantingCalendar extends React.Component {
       }
     } else {
       for ( let i = 0; i < this.props.dayList.length; i++ ){
-        const calendarDay = moment(this.props.dayList[i].date).format("YYYY-MM-DD");
+        const calendarDay = moment(this.props.dayList[i].date).format("D");
         let optimal = "calendarDay";
         if (this.props.dayList[i].optimal){
           optimal = "calendarDay optimal";
@@ -103,7 +103,7 @@ class plantingCalendar extends React.Component {
 
   currentDay( dateInQuestion ){
     let currentDay = "calendarDay";
-    if ( dateInQuestion ===  moment().format("YYYY-MM-DD") ){
+    if ( dateInQuestion === moment().format("YYYY-MM-DD") ){
       currentDay = "calendarDay currentDay";
     }
 
@@ -112,8 +112,7 @@ class plantingCalendar extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>Calendar was called</p>
+      <div className="mb-4">
         <div className="container">
           {this.createCalendarHeader(this.props.monthInQuestion)}
           <div className="row"> {this.createWeekDays()} </div>
