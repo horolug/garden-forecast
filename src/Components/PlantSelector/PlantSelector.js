@@ -16,11 +16,22 @@ class PlantSelector extends React.Component {
       seedPlants: ['spinach', 'lettuce'],
       plantName: '',
       plantType: '',
-      monthRange: ["2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01", "2019-08-01",],
-      currentMonth: moment("2019-07-01").format("YYYY-MM-DD"),
+      monthRange: this.timeRange(),
     };
     this.selectedPlant = this.selectedPlant.bind(this);
+  }
 
+  timeRange (){
+    const currentMonth = moment().startOf('month');
+    const months = 6;
+    let monthList = [];
+    for ( let i = 0; i < months; i++ ){
+     monthList.push(
+       moment(currentMonth).add(i, 'M').startOf('month').format("YYYY-MM-DD")
+     )
+    }
+
+    return monthList;
   }
 
   storeMoonPhases = (data) => {
