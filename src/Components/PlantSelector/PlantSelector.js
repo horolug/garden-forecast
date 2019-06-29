@@ -21,6 +21,124 @@ class PlantSelector extends React.Component {
     this.selectedPlant = this.selectedPlant.bind(this);
   }
 
+  plantList (){
+    // Fixme - this static data for early dev purposes
+    // Data should come from API
+
+    const plants = {
+      root: [
+        {
+          name: "carrot",
+          variety: "orange",
+          seedtoPlant: 7-10,
+          plantToFruit: 70-80,
+          minTemp: 4,
+          optimalRange: 7-30
+        },
+        {
+          name: "radish",
+          variety: "big",
+          seedtoPlant: 3-8,
+          plantToFruit: 21-30,
+          minTemp: 7,
+          optimalRange: 9-29
+        },
+
+      ],
+      fruit: [
+        {
+          name: "tomatoe",
+          variety: "cherry",
+          seedtoPlant: 6-14,
+          plantToFruit: 21-35,
+          minTemp: 10,
+          optimalRange: 16-30
+        },
+        {
+          name: "'pumpkin",
+          variety: "round",
+          seedtoPlant: 6-10,
+          plantToFruit: 21-35,
+          minTemp: 16,
+          optimalRange: 21-32
+        },
+      ],
+      seed: [
+        {
+          name: "spinatch",
+          variety: "green",
+          seedtoPlant: 10-18,
+          plantToFruit: 37-45,
+          minTemp: 7,
+          optimalRange: 10-21
+        },
+        {
+          name: "lettuce",
+          variety: "sweet",
+          seedtoPlant: 6-10,
+          plantToFruit: 45-55,
+          minTemp: 2,
+          optimalRange: 4-27
+        },
+      ]
+    }
+
+  }
+
+  averageTemp (){
+    // Fixme - this static data for a small specific region
+    const tempList = [
+      {
+        avgMax : "-2",
+        avgMin : "-5"
+      },
+      {
+        avgMax : "-2",
+        avgMin : "-5"
+      },
+      {
+        avgMax : "+5",
+        avgMin : "-2"
+      },
+      {
+        avgMax : "14",
+        avgMin : "0"
+      },
+      {
+        avgMax : "15",
+        avgMin : "8"
+      },
+      {
+        avgMax : "16.4",
+        avgMin : "10"
+      },
+      {
+        avgMax : "17.5",
+        avgMin : "11"
+      },
+      {
+        avgMax : "15",
+        avgMin : "10"
+      },
+      {
+        avgMax : "13",
+        avgMin : "8"
+      },
+      {
+        avgMax : "10",
+        avgMin : "2"
+      },
+      {
+        avgMax : "5",
+        avgMin : "0"
+      },
+      {
+        avgMax : "0",
+        avgMin : "-5"
+      },
+    ]
+  }
+
   timeRange (){
     const currentMonth = moment().startOf('month');
     const months = 6;
