@@ -16,6 +16,8 @@ class PlantSelector extends React.Component {
       seedPlants: ['spinach', 'lettuce'],
       plantName: '',
       plantType: '',
+      selectedPlant: {},
+      plantList: this.plantList(),
       monthRange: this.timeRange(),
     };
     this.selectedPlant = this.selectedPlant.bind(this);
@@ -47,7 +49,7 @@ class PlantSelector extends React.Component {
       ],
       fruit: [
         {
-          name: "tomatoe",
+          name: "tomato",
           variety: "cherry",
           seedtoPlant: 6-14,
           plantToFruit: 21-35,
@@ -55,7 +57,7 @@ class PlantSelector extends React.Component {
           optimalRange: 16-30
         },
         {
-          name: "'pumpkin",
+          name: "pumpkin",
           variety: "round",
           seedtoPlant: 6-10,
           plantToFruit: 21-35,
@@ -82,62 +84,10 @@ class PlantSelector extends React.Component {
         },
       ]
     }
-
+    return plants;
   }
 
-  averageTemp (){
-    // Fixme - this static data for a small specific region
-    const tempList = [
-      {
-        avgMax : "-2",
-        avgMin : "-5"
-      },
-      {
-        avgMax : "-2",
-        avgMin : "-5"
-      },
-      {
-        avgMax : "+5",
-        avgMin : "-2"
-      },
-      {
-        avgMax : "14",
-        avgMin : "0"
-      },
-      {
-        avgMax : "15",
-        avgMin : "8"
-      },
-      {
-        avgMax : "16.4",
-        avgMin : "10"
-      },
-      {
-        avgMax : "17.5",
-        avgMin : "11"
-      },
-      {
-        avgMax : "15",
-        avgMin : "10"
-      },
-      {
-        avgMax : "13",
-        avgMin : "8"
-      },
-      {
-        avgMax : "10",
-        avgMin : "2"
-      },
-      {
-        avgMax : "5",
-        avgMin : "0"
-      },
-      {
-        avgMax : "0",
-        avgMin : "-5"
-      },
-    ]
-  }
+
 
   timeRange (){
     const currentMonth = moment().startOf('month');
@@ -159,7 +109,11 @@ class PlantSelector extends React.Component {
   }
 
   selectedPlant (event) {
+    // FIXME selected plant and plant type are most likely redundant
+    const plant = this.state.plantList[event.target.id].find(obj => obj.name == event.target.value);
+
     this.setState({
+      selectedPlant: plant,
       plantName: event.target.value,
       plantType: event.target.id,
     });
@@ -171,7 +125,7 @@ class PlantSelector extends React.Component {
        key={val}
        storeMonthDates={this.storeMonthDates}
        monthInQuestion={val}
-       dayList={helpers.monthDays(this.state.plantType, val )}
+       dayList={helpers.monthDays(this.state.plantType, val, this.state.selectedPlant )}
       />;
     });
     return (
@@ -191,7 +145,7 @@ class PlantSelector extends React.Component {
             <DropDown
               plantType="root"
               selectedPlant={(e) => this.selectedPlant(e)}
-              options={this.state.rootPlants}
+              options={this.state.plantList.root}
             />
           </div>
           <div className="col">
@@ -199,7 +153,7 @@ class PlantSelector extends React.Component {
             <DropDown
               plantType="fruit"
               selectedPlant={(e) => this.selectedPlant(e)}
-              options={this.state.fruitPlants}
+              options={this.state.plantList.fruit}
             />
           </div>
           <div className="col">
@@ -207,7 +161,7 @@ class PlantSelector extends React.Component {
             <DropDown
               plantType="seed"
               selectedPlant={(e) => this.selectedPlant(e)}
-              options={this.state.seedPlants}
+              options={this.state.plantList.seed}
             />
           </div>
 

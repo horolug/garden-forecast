@@ -9,7 +9,7 @@ class PlantAdvice extends React.Component {
   }
 
   render() {
-    const conditions =  this.props.iDealConditions;
+    const conditions = this.props.iDealConditions;
     let conditionList = "";
     if ( conditions !== false ){
       conditionList = conditions.map((item, index) => (

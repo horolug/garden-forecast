@@ -9,7 +9,7 @@ class DropDown extends React.Component {
 
   render() {
     const oprionList = this.props.options.map((item, index) => (
-      <option key={index}> {item} </option>
+      <option key={item.name}> {item.name} </option>
     ));
     return (
       <select
