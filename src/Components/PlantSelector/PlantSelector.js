@@ -21,7 +21,6 @@ class PlantSelector extends React.Component {
       monthRange: this.timeRange(),
     };
     this.selectedPlant = this.selectedPlant.bind(this);
-    this.plantingLocation = this.plantingLocation.bind(this);
   }
 
   plantList (){
