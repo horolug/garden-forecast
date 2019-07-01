@@ -129,9 +129,7 @@ const helpers = {
     if ( plantType == null ){
       return false;
     }
-
-    const dayInQuestion = moment(date).format("YYYY-MM-DD");
-    const moonPhase = this.moonPhaseCalendar( dayInQuestion );
+    const moonPhase = this.moonPhaseCalendar(  moment(date).format("YYYY-MM-DD")  );
     const conditionLabel = this.matchConditions(moonPhase, plantType, plant, date);
 
     return conditionLabel;
@@ -182,7 +180,12 @@ const helpers = {
 
   foo( bar ){
 
+  },
+
+  optimal (){
+
   }
+
 }
 
 export default helpers;

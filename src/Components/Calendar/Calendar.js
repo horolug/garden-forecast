@@ -41,7 +41,7 @@ class plantingCalendar extends React.Component {
         if (this.props.dayList[i].optimal){
           optimal = "calendarDay optimal";
         }
-        optimal = optimal +" "+ this.currentDay(calendarDay);
+        optimal = optimal +" "+ this.currentDay(this.props.dayList[i].date);
         listOfDays.push(
           <div className={optimal} key={this.props.dayList[i].date}>
             {calendarDay}
