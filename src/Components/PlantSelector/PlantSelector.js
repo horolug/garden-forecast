@@ -21,6 +21,7 @@ class PlantSelector extends React.Component {
       monthRange: this.timeRange(),
     };
     this.selectedPlant = this.selectedPlant.bind(this);
+    this.plantingLocation = this.plantingLocation.bind(this);
   }
 
   plantList (){
@@ -87,8 +88,6 @@ class PlantSelector extends React.Component {
     return plants;
   }
 
-
-
   timeRange (){
     const currentMonth = moment().startOf('month');
     const months = 6;
@@ -140,6 +139,9 @@ class PlantSelector extends React.Component {
           </div>
         </div>
         <div className="row">
+          <p>Pasirinkite kas bus siejama</p>
+        </div>
+        <div className="row">
           <div className="col">
             <p>Root</p>
             <DropDown
@@ -164,9 +166,26 @@ class PlantSelector extends React.Component {
               options={this.state.plantList.seed}
             />
           </div>
-
+        </div>
+        <div className="row">
+          <p>Pasirinkite kur bus siejamos sėklos</p>
+          <p>Pagal nutylėjimą skaičiuoklė numato kad bus siejamą į atvirą gruntą</p>
         </div>
 
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label className="btn btn-info active">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked/>
+            Į atvirą gruntą
+          </label>
+          <label className="btn btn-info">
+            <input type="radio" name="options" id="option2" autocomplete="off"/>
+            Sodinama Šiltnamyje
+          </label>
+          <label className="btn btn-info">
+            <input type="radio" name="options" id="option3" autocomplete="off"/>
+            Sodinama šildomoje patalpoje
+          </label>
+        </div>
         <div className="row" >
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
