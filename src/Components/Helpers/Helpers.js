@@ -65,7 +65,7 @@ const helpers = {
   siutableTemp(plant, date){
     const tempList = this.averageTemp();
     const monthNumber = moment(date).format('M')-1; // 0 -> january
-    if( plant.minTemp > tempList[monthNumber].avgMin ){
+    if( plant.minTemp > (tempList[monthNumber].avgMin+tempList[monthNumber].avgMax)/2 ){
       return false
     }
 

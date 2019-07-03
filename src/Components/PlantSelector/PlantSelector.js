@@ -4,6 +4,7 @@ import CallDarkSky from '../DarkSky/DarkSky';
 import DropDown from '../DropDown/DropDown';
 import PlantingCalendar from '../Calendar/Calendar';
 import helpers from '../Helpers/Helpers';
+import RadioToggle from '../Helpers/RadioToggle';
 
 class PlantSelector extends React.Component {
 
@@ -171,20 +172,7 @@ class PlantSelector extends React.Component {
           <p>Pagal nutylėjimą skaičiuoklė numato kad bus siejamą į atvirą gruntą</p>
         </div>
 
-        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-          <label className="btn btn-info active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked/>
-            Į atvirą gruntą
-          </label>
-          <label className="btn btn-info">
-            <input type="radio" name="options" id="option2" autocomplete="off"/>
-            Sodinama Šiltnamyje
-          </label>
-          <label className="btn btn-info">
-            <input type="radio" name="options" id="option3" autocomplete="off"/>
-            Sodinama šildomoje patalpoje
-          </label>
-        </div>
+        <RadioToggle />
         <div className="row" >
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
