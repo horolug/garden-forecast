@@ -5,8 +5,7 @@ class RadioToggle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: "option1",
-      toggle: false
+      selectedOption: "option1"
 		};
 
 	  this.radioChange = this.radioChange.bind(this);
@@ -16,6 +15,8 @@ class RadioToggle extends React.Component {
 		this.setState({
 			selectedOption: event.target.id
 		});
+
+    this.props.onChange(event.target.value);
 	}
 
   isChecked(htmlID) {

@@ -62,20 +62,28 @@ const helpers = {
     return Number(num); //If you need it back as a Number
   },
 
-  siutableTemp(plant, date){
+  siutableTemp(plant, date, adjustedTemp){
     const tempList = this.averageTemp();
     const monthNumber = moment(date).format('M')-1; // 0 -> january
-    if( plant.minTemp > (tempList[monthNumber].avgMin+tempList[monthNumber].avgMax)/2 ){
+    let avgTemp = (tempList[monthNumber].avgMin+tempList[monthNumber].avgMax)/2
+    if ( adjustedTemp === "ideal"){
+      return true;
+    } else if (adjustedTemp ==="plus-ten"){
+      avgTemp = avgTemp + 10;
+      if ( plant.minTemp > avgTemp){
+        return false;
+      }
+    } else if ( plant.minTemp > avgTemp ){
       return false
     }
 
     return true;
   },
 
-  matchConditions( phase, plantType, plant, date ){
+  matchConditions( phase, plantType, plant, date, adjustedTemp ){
     let conditionLabel = false;
 
-    if ( this.siutableTemp(plant, date) ){
+    if ( this.siutableTemp(plant, date, adjustedTemp) ){
       if ( phase <= 0.25 ) {
         // New moon - good for seed type
         if ( plantType === "seed" ){
@@ -125,12 +133,12 @@ const helpers = {
     return dayList;
   },
 
-  isOptimalForPlanting( date, plantType, plant ){
+  isOptimalForPlanting( date, plantType, plant, adjustedTemp ){
     if ( plantType == null ){
       return false;
     }
     const moonPhase = this.moonPhaseCalendar(  moment(date).format("YYYY-MM-DD")  );
-    const conditionLabel = this.matchConditions(moonPhase, plantType, plant, date);
+    const conditionLabel = this.matchConditions(moonPhase, plantType, plant, date, adjustedTemp);
 
     return conditionLabel;
   },
@@ -161,7 +169,7 @@ const helpers = {
     return currentMoonphase;
   },
 
-  monthDays( plantType, month, plant){
+  monthDays( plantType, month, plant, adjustedTemp){
     if (plantType == null || plantType === ""  ){
       return false;
     }
@@ -169,7 +177,7 @@ const helpers = {
     let dayList = [];
     for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
       const givenDay = moment(startOfMonth).add(i, 'days').format("YYYY-MM-DD");
-      const isOptimal = this.isOptimalForPlanting(givenDay, plantType, plant);
+      const isOptimal = this.isOptimalForPlanting(givenDay, plantType, plant, adjustedTemp);
       dayList.push({
         date: givenDay,
         optimal: isOptimal

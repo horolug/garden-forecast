@@ -20,6 +20,7 @@ class PlantSelector extends React.Component {
       selectedPlant: {},
       plantList: this.plantList(),
       monthRange: this.timeRange(),
+      adjustedTemp: "normal",
     };
     this.selectedPlant = this.selectedPlant.bind(this);
   }
@@ -88,6 +89,12 @@ class PlantSelector extends React.Component {
     return plants;
   }
 
+  adjustTemperature = (data) => {
+    this.setState({
+      adjustedTemp : data
+    });
+  }
+
   timeRange (){
     const currentMonth = moment().startOf('month');
     const months = 6;
@@ -124,7 +131,7 @@ class PlantSelector extends React.Component {
        key={val}
        storeMonthDates={this.storeMonthDates}
        monthInQuestion={val}
-       dayList={helpers.monthDays(this.state.plantType, val, this.state.selectedPlant )}
+       dayList={helpers.monthDays(this.state.plantType, val, this.state.selectedPlant, this.state.adjustedTemp )}
       />;
     });
     return (
@@ -172,7 +179,9 @@ class PlantSelector extends React.Component {
           <p>Pagal nutylėjimą skaičiuoklė numato kad bus siejamą į atvirą gruntą</p>
         </div>
 
-        <RadioToggle />
+        <RadioToggle
+          onChange={this.adjustTemperature}
+         />
         <div className="row" >
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
