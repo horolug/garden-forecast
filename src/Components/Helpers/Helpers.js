@@ -170,11 +170,11 @@ const helpers = {
   },
 
   cycleCounter() {
-    let count = 1;
-    const up = function() {
-      return ++count;
+    let count = 0;
+    this.up = function() {
+       return ++count;
     };
-    const stay = function() {
+    this.stay = function() {
       return count;
     };
   },
@@ -186,8 +186,8 @@ const helpers = {
 
     const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
     let dayList = [];
-    const cycleCount = counter();
-    let cycleCounter = 0;
+
+    let cycleCounter = counter.stay();
     for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
       const givenDay = moment(startOfMonth).add(i, 'days').format("YYYY-MM-DD");
       const isOptimal = this.isOptimalForPlanting(givenDay, plantType, plant, adjustedTemp);
@@ -195,7 +195,7 @@ const helpers = {
       const optimalDayBefore = this.isOptimalForPlanting(dayBefore, plantType, plant, adjustedTemp);
 
       if (isOptimal === true && optimalDayBefore === false ){
-        cycleCounter = cycleCount.up();
+        cycleCounter = counter.up();
         console.log("increasing counter to", cycleCounter);
       }
 
