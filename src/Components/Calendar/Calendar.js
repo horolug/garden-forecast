@@ -38,13 +38,19 @@ class plantingCalendar extends React.Component {
       for ( let i = 0; i < this.props.dayList.length; i++ ){
         const calendarDay = moment(this.props.dayList[i].date).format("D");
         let optimal = "calendarDay";
+        let badge = "";
         if (this.props.dayList[i].optimal){
           optimal = "calendarDay optimal";
+          badge = <span className="badge badge-pill badge-primary">{this.props.dayList[i].cycle}</span>;
         }
+
         optimal = optimal +" "+ this.currentDay(this.props.dayList[i].date);
+
+        console.log("optimal");
         listOfDays.push(
           <div className={optimal} key={this.props.dayList[i].date}>
             {calendarDay}
+            {badge}
           </div>
         );
       }

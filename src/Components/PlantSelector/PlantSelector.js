@@ -116,7 +116,7 @@ class PlantSelector extends React.Component {
 
   selectedPlant (event) {
     // FIXME selected plant and plant type are most likely redundant
-    const plant = this.state.plantList[event.target.id].find(obj => obj.name == event.target.value);
+    const plant = this.state.plantList[event.target.id].find(obj => obj.name === event.target.value);
 
     this.setState({
       selectedPlant: plant,
@@ -126,12 +126,13 @@ class PlantSelector extends React.Component {
   }
 
   render() {
+    const counter = new helpers.cycleCounter();
     const monthList = this.state.monthRange.map((val, i, arr) => {
      return <PlantingCalendar
        key={val}
        storeMonthDates={this.storeMonthDates}
        monthInQuestion={val}
-       dayList={helpers.monthDays(this.state.plantType, val, this.state.selectedPlant, this.state.adjustedTemp )}
+       dayList={helpers.monthDays(this.state.plantType, val, this.state.selectedPlant, this.state.adjustedTemp, counter )}
       />;
     });
     return (

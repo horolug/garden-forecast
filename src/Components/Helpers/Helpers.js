@@ -106,7 +106,7 @@ const helpers = {
 
   nextIdealConditions( plantType, date, plant ){
     // Take current day as start date
-    // Loop throug moonphases until ideal conditions are shown
+    // Loop through moonphases until ideal conditions are shown
     if( plantType === "" ){
       return false;
     }
@@ -137,7 +137,7 @@ const helpers = {
     if ( plantType == null ){
       return false;
     }
-    const moonPhase = this.moonPhaseCalendar(  moment(date).format("YYYY-MM-DD")  );
+    const moonPhase = this.moonPhaseCalendar( moment(date).format("YYYY-MM-DD") );
     const conditionLabel = this.matchConditions(moonPhase, plantType, plant, date, adjustedTemp);
 
     return conditionLabel;
@@ -169,18 +169,41 @@ const helpers = {
     return currentMoonphase;
   },
 
-  monthDays( plantType, month, plant, adjustedTemp){
+  cycleCounter() {
+    let count = 1;
+    const up = function() {
+      return ++count;
+    };
+    const stay = function() {
+      return count;
+    };
+  },
+
+  monthDays( plantType, month, plant, adjustedTemp, counter){
     if (plantType == null || plantType === ""  ){
       return false;
     }
+
     const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
     let dayList = [];
+    const cycleCount = counter();
+    let cycleCounter = 0;
     for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
       const givenDay = moment(startOfMonth).add(i, 'days').format("YYYY-MM-DD");
       const isOptimal = this.isOptimalForPlanting(givenDay, plantType, plant, adjustedTemp);
+      const dayBefore = moment(startOfMonth).add(i-1, 'days').format("YYYY-MM-DD");
+      const optimalDayBefore = this.isOptimalForPlanting(dayBefore, plantType, plant, adjustedTemp);
+
+      if (isOptimal === true && optimalDayBefore === false ){
+        cycleCounter = cycleCount.up();
+        console.log("increasing counter to", cycleCounter);
+      }
+
+      // console.log("cycleCounter", cycleCounter);
       dayList.push({
         date: givenDay,
-        optimal: isOptimal
+        optimal: isOptimal,
+        cycle: cycleCounter,
       });
     }
     return dayList;
