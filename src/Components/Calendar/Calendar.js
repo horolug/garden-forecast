@@ -1,14 +1,17 @@
 import React from 'react';
 import moment from 'moment';
 import 'moment/locale/lt';
+import helpers from '../Helpers/Helpers';
 
 moment.locale('lt');
 
-class plantingCalendar extends React.Component {
+class PlantingCalendar extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      dayList: []
+    };
   }
 
   createBlankCells( month ){
@@ -28,32 +31,41 @@ class plantingCalendar extends React.Component {
 
   createDayCells(month){
     let listOfDays = this.createBlankCells( month );
-    if ( !this.props.dayList ){
-      for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
-        const startOfMonth =  moment(month).startOf("month").format("YYYY-MM");
-        const dateInQuestion = moment(startOfMonth+"-"+(i+1)).format("YYYY-MM-DD");
-        listOfDays.push( <div className={this.currentDay(dateInQuestion)} key={i+1}> {i+1}</div>);
-      }
-    } else {
-      for ( let i = 0; i < this.props.dayList.length; i++ ){
-        const calendarDay = moment(this.props.dayList[i].date).format("D");
-        let optimal = "calendarDay";
-        let badge = "";
-        if (this.props.dayList[i].optimal){
-          optimal = "calendarDay optimal";
-          badge = <span className="badge badge-pill badge-primary">{this.props.dayList[i].cycle}</span>;
-        }
 
-        optimal = optimal +" "+ this.currentDay(this.props.dayList[i].date);
+    for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
+      const startOfMonth =  moment(month).startOf("month").format("YYYY-MM-DD");
+      const dateInQuestion = moment(startOfMonth).add(i, 'days').format("YYYY-MM-DD");
+      const calendarDay = moment(startOfMonth).add(i, 'days').format("D");
+      let badge = "";
+      let optimal = this.currentDay(dateInQuestion);
 
-        console.log("optimal");
-        listOfDays.push(
-          <div className={optimal} key={this.props.dayList[i].date}>
-            {calendarDay}
-            {badge}
-          </div>
-        );
+      const optimalDate = helpers.isOptimalForPlanting(
+                                  dateInQuestion,
+                                  this.props.plant.type,
+                                  this.props.plant,
+                                  this.props.adjustedTemp
+                                );
+      const dayBefore = moment(dateInQuestion).add(i-1, 'days').format("YYYY-MM-DD");
+      const optimalDayBefore = helpers.isOptimalForPlanting(
+        dayBefore, this.props.plant.type, this.props.plant, this.props.adjustedTemp
+      );
+      let counter = new helpers.cycleCounter();
+
+      let cycleCounter = counter.stay();
+      if (optimalDate === true && optimalDayBefore === false ){
+        cycleCounter = counter.up();
       }
+      if (optimalDate){
+        optimal = "optimal " + this.currentDay(dateInQuestion);;
+        badge = <span className="badge badge-pill badge-primary">{cycleCounter}</span>;
+      }
+
+      listOfDays.push(
+        <div className={optimal} key={calendarDay}>
+          {calendarDay}
+          {badge}
+        </div>
+      );
     }
 
     return listOfDays;
@@ -64,7 +76,7 @@ class plantingCalendar extends React.Component {
     let calendarTable = [];
     let tableRows = [];
 
-    for( let i = 0; i <dayList.length; i++ ){
+    for( let i = 0; i < dayList.length; i++ ){
       if ( tableRows.length < 7){
         tableRows.push(dayList[i]);
         if ( i === dayList.length - 1 ){
@@ -116,18 +128,33 @@ class plantingCalendar extends React.Component {
     return currentDay;
   }
 
+  createMonth(){
+    let calendarList = [];
+    for ( let i = 0; i < this.props.monthRange; i++){
+      let monthInQuestion = moment().startOf('month');
+      monthInQuestion.add(i, "months").format("YYYY-MM-DD");
+
+      calendarList.push(
+        <div key={monthInQuestion} className="mb-4">
+          <div className="container">
+            {this.createCalendarHeader(monthInQuestion)}
+            <div className="row"> {this.createWeekDays()} </div>
+            {this.createTableRows(monthInQuestion)}
+          </div>
+        </div>
+      );
+    }
+    return calendarList;
+  }
+
   render() {
     return (
-      <div className="mb-4">
-        <div className="container">
-          {this.createCalendarHeader(this.props.monthInQuestion)}
-          <div className="row"> {this.createWeekDays()} </div>
-          {this.createTableRows(this.props.monthInQuestion)}
-        </div>
+      <div>
+        {this.createMonth()}
       </div>
     );
   }
 
 }
 
-export default plantingCalendar;
+export default PlantingCalendar;

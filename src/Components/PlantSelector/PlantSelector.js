@@ -20,7 +20,9 @@ class PlantSelector extends React.Component {
       selectedPlant: {},
       plantList: this.plantList(),
       monthRange: this.timeRange(),
+      dayRange: 365,
       adjustedTemp: "normal",
+      monthCount: 6,
     };
     this.selectedPlant = this.selectedPlant.bind(this);
   }
@@ -33,6 +35,7 @@ class PlantSelector extends React.Component {
       root: [
         {
           name: "carrot",
+          type: "root",
           variety: "orange",
           seedtoPlant: 7-10,
           plantToFruit: 70-80,
@@ -41,6 +44,7 @@ class PlantSelector extends React.Component {
         },
         {
           name: "radish",
+          type: "root",
           variety: "big",
           seedtoPlant: 3-8,
           plantToFruit: 21-30,
@@ -52,6 +56,7 @@ class PlantSelector extends React.Component {
       fruit: [
         {
           name: "tomato",
+          type: "fruit",
           variety: "cherry",
           seedtoPlant: 6-14,
           plantToFruit: 21-35,
@@ -60,6 +65,7 @@ class PlantSelector extends React.Component {
         },
         {
           name: "pumpkin",
+          type: "fruit",
           variety: "round",
           seedtoPlant: 6-10,
           plantToFruit: 21-35,
@@ -70,6 +76,7 @@ class PlantSelector extends React.Component {
       seed: [
         {
           name: "spinatch",
+          type: "seed",
           variety: "green",
           seedtoPlant: 10-18,
           plantToFruit: 37-45,
@@ -78,6 +85,7 @@ class PlantSelector extends React.Component {
         },
         {
           name: "lettuce",
+          type: "seed",
           variety: "sweet",
           seedtoPlant: 6-10,
           plantToFruit: 45-55,
@@ -126,15 +134,8 @@ class PlantSelector extends React.Component {
   }
 
   render() {
-    const counter = new helpers.cycleCounter();
-    const monthList = this.state.monthRange.map((val, i, arr) => {
-     return <PlantingCalendar
-       key={val}
-       storeMonthDates={this.storeMonthDates}
-       monthInQuestion={val}
-       dayList={helpers.monthDays(this.state.plantType, val, this.state.selectedPlant, this.state.adjustedTemp, counter )}
-      />;
-    });
+    const daylist = [];
+
     return (
       <div>
         <CallDarkSky
@@ -187,7 +188,11 @@ class PlantSelector extends React.Component {
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
 
-            {monthList}
+            <PlantingCalendar
+              monthRange={this.state.monthCount}
+              adjustedTemp={this.state.adjustedTemp}
+              plant={this.state.selectedPlant}
+             />
           </div>
         </div>
       </div>

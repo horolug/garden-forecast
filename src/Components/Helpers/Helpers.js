@@ -80,6 +80,17 @@ const helpers = {
     return true;
   },
 
+  harvetTime ( plant, plantingTime ){
+    console.log("plant to fruit", plant.plantToFruit);
+    let daysPassed = 0;
+
+    if (plant.plantToFruit === daysPassed){
+      return true;
+    }
+    daysPassed++;
+    return false;
+  },
+
   matchConditions( phase, plantType, plant, date, adjustedTemp ){
     let conditionLabel = false;
 
@@ -204,9 +215,15 @@ const helpers = {
         date: givenDay,
         optimal: isOptimal,
         cycle: cycleCounter,
+        harvest: false
       });
     }
     return dayList;
+  },
+
+
+  plantingDays (){
+
   },
 
   foo( bar ){
