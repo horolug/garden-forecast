@@ -190,37 +190,6 @@ const helpers = {
     };
   },
 
-  monthDays( plantType, month, plant, adjustedTemp, counter){
-    if (plantType == null || plantType === ""  ){
-      return false;
-    }
-
-    const startOfMonth = moment(month).startOf("month").format("YYYY-MM-DD");
-    let dayList = [];
-
-    let cycleCounter = counter.stay();
-    for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
-      const givenDay = moment(startOfMonth).add(i, 'days').format("YYYY-MM-DD");
-      const isOptimal = this.isOptimalForPlanting(givenDay, plantType, plant, adjustedTemp);
-      const dayBefore = moment(startOfMonth).add(i-1, 'days').format("YYYY-MM-DD");
-      const optimalDayBefore = this.isOptimalForPlanting(dayBefore, plantType, plant, adjustedTemp);
-
-      if (isOptimal === true && optimalDayBefore === false ){
-        cycleCounter = counter.up();
-        console.log("increasing counter to", cycleCounter);
-      }
-
-      // console.log("cycleCounter", cycleCounter);
-      dayList.push({
-        date: givenDay,
-        optimal: isOptimal,
-        cycle: cycleCounter,
-        harvest: false
-      });
-    }
-    return dayList;
-  },
-
 
   plantingDays (){
 
