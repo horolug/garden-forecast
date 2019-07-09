@@ -29,7 +29,7 @@ class PlantingCalendar extends React.Component {
     return blankCells;
   }
 
-  createDayCells(month){
+  createDayCells(month, counter){
     let listOfDays = this.createBlankCells( month );
 
     for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
@@ -45,11 +45,11 @@ class PlantingCalendar extends React.Component {
                                   this.props.plant,
                                   this.props.adjustedTemp
                                 );
-      const dayBefore = moment(dateInQuestion).add(i-1, 'days').format("YYYY-MM-DD");
+
+      const dayBefore = moment(dateInQuestion).subtract(1, 'days').format("YYYY-MM-DD");
       const optimalDayBefore = helpers.isOptimalForPlanting(
         dayBefore, this.props.plant.type, this.props.plant, this.props.adjustedTemp
       );
-      let counter = new helpers.cycleCounter();
 
       let cycleCounter = counter.stay();
       if (optimalDate === true && optimalDayBefore === false ){
@@ -71,8 +71,8 @@ class PlantingCalendar extends React.Component {
     return listOfDays;
   }
 
-  createTableRows(month){
-    const dayList = this.createDayCells(month);
+  createTableRows(month, counter){
+    const dayList = this.createDayCells(month, counter);
     let calendarTable = [];
     let tableRows = [];
 
@@ -130,6 +130,7 @@ class PlantingCalendar extends React.Component {
 
   createMonth(){
     let calendarList = [];
+    let counter = new helpers.cycleCounter();
     for ( let i = 0; i < this.props.monthRange; i++){
       let monthInQuestion = moment().startOf('month');
       monthInQuestion.add(i, "months").format("YYYY-MM-DD");
@@ -139,7 +140,7 @@ class PlantingCalendar extends React.Component {
           <div className="container">
             {this.createCalendarHeader(monthInQuestion)}
             <div className="row"> {this.createWeekDays()} </div>
-            {this.createTableRows(monthInQuestion)}
+            {this.createTableRows(monthInQuestion, counter)}
           </div>
         </div>
       );
