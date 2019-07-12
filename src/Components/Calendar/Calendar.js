@@ -33,6 +33,8 @@ class PlantingCalendar extends React.Component {
     let listOfDays = this.createBlankCells( month );
 
     for ( let i = 0; i < moment(month).daysInMonth(); i++ ){
+
+      // Fixme - move into helpers.cycleMarker
       const startOfMonth =  moment(month).startOf("month").format("YYYY-MM-DD");
       const dateInQuestion = moment(startOfMonth).add(i, 'days').format("YYYY-MM-DD");
       const calendarDay = moment(startOfMonth).add(i, 'days').format("D");
@@ -48,8 +50,11 @@ class PlantingCalendar extends React.Component {
 
       const dayBefore = moment(dateInQuestion).subtract(1, 'days').format("YYYY-MM-DD");
       const optimalDayBefore = helpers.isOptimalForPlanting(
-        dayBefore, this.props.plant.type, this.props.plant, this.props.adjustedTemp
-      );
+                                  dayBefore,
+                                  this.props.plant.type,
+                                  this.props.plant,
+                                  this.props.adjustedTemp
+                                );
 
       let cycleCounter = counter.stay();
       if (optimalDate === true && optimalDayBefore === false ){
@@ -58,6 +63,8 @@ class PlantingCalendar extends React.Component {
       if (optimalDate){
         optimal = "optimal " + this.currentDay(dateInQuestion);;
         badge = <span className="badge badge-pill badge-primary">{cycleCounter}</span>;
+
+        helpers.harvestDays(dateInQuestion, this.props.plant, dateInQuestion);
       }
 
       listOfDays.push(

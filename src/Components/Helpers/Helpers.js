@@ -144,12 +144,39 @@ const helpers = {
     return dayList;
   },
 
+  willMature( plant, date, adjustedTemp ){
+    const timeToHarvest = plant.plantToFruit;
+    const fruitDate = moment(date).add(timeToHarvest, "days").format("MM");
+    let tempIncrease = 0;
+    if ( adjustedTemp === "plus-ten"  ){
+      tempIncrease = 10;
+    } else if ( adjustedTemp === "ideal" ){
+      tempIncrease = 20;
+    }
+
+    const tempAvg = (
+        parseInt(this.averageTemp()[fruitDate-1].avgMax)
+         + parseInt(this.averageTemp()[fruitDate-1].avgMin)
+       )/2 + tempIncrease;
+
+    if ( tempAvg < plant.minTemp ){
+      return false;
+    }
+
+    return true;
+  },
+
   isOptimalForPlanting( date, plantType, plant, adjustedTemp ){
     if ( plantType == null ){
       return false;
     }
+
+    let conditionLabel = false;
     const moonPhase = this.moonPhaseCalendar( moment(date).format("YYYY-MM-DD") );
-    const conditionLabel = this.matchConditions(moonPhase, plantType, plant, date, adjustedTemp);
+
+    if ( this.willMature( plant, date, adjustedTemp ) ){
+      conditionLabel = this.matchConditions(moonPhase, plantType, plant, date, adjustedTemp);
+    }
 
     return conditionLabel;
   },
@@ -191,17 +218,16 @@ const helpers = {
   },
 
 
-  plantingDays (){
+  harvestDays (date, plant, startDate){
+    console.log("harvestDays date", date );
+    console.log("harvestDays plant", plant.plantToFruit );
+    console.log("startDate", startDate );
 
+    const harvestDate = moment(startDate).add(plant.plantToFruit, 'days').format("YYYY-MM-DD");
+
+    console.log("harvestDate", harvestDate);
   },
 
-  foo( bar ){
-
-  },
-
-  optimal (){
-
-  }
 
 }
 
