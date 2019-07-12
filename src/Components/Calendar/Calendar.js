@@ -61,7 +61,7 @@ class PlantingCalendar extends React.Component {
         cycleCounter = counter.up();
       }
       if (optimalDate){
-        optimal = "optimal " + this.currentDay(dateInQuestion);;
+        optimal = "optimal " + this.currentDay(dateInQuestion);
         badge = <span className="badge badge-pill badge-primary">{cycleCounter}</span>;
 
         helpers.harvestDays(dateInQuestion, this.props.plant, dateInQuestion);
