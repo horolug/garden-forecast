@@ -90,6 +90,7 @@ const helpers = {
     daysPassed++;
     return false;
   },
+  
   /// legacy code - to be scrapped after refactoring
   matchConditions( phase, plantType, plant, date, adjustedTemp ){
     let conditionLabel = false;
@@ -115,6 +116,7 @@ const helpers = {
     return conditionLabel;
   },
   /// end
+
   idealFor( date ){
     const phase = this.moonPhaseCalendar( date );
     if ( phase <= 0.25 ) {
