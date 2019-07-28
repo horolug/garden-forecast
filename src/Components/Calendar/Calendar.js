@@ -156,6 +156,7 @@ class PlantingCalendar extends React.Component {
   }
 
   render() {
+    helpers.makeCalendar('2019-05-12', '2019-12-17');
     return (
       <div>
         {this.createMonth()}

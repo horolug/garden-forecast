@@ -90,7 +90,7 @@ const helpers = {
     daysPassed++;
     return false;
   },
-
+  /// legacy code - to be scrapped after refactoring
   matchConditions( phase, plantType, plant, date, adjustedTemp ){
     let conditionLabel = false;
 
@@ -113,6 +113,22 @@ const helpers = {
       }
     }
     return conditionLabel;
+  },
+  /// end
+  idealFor( date ){
+    const phase = this.moonPhaseCalendar( date );
+    if ( phase <= 0.25 ) {
+      // New moon - good for seed type
+      return "seed";
+    } else if( (phase > 0.25) && (phase < 0.50) ){
+      // 2nd quarter - good for fruit type
+      return "fruit";
+    } else if ( (phase >= 0.50) && (phase <= 0.75)){
+      // Full moon - good for roots
+      return "root";
+    }
+
+    return "";
   },
 
   nextIdealConditions( plantType, date, plant ){
@@ -217,17 +233,50 @@ const helpers = {
     };
   },
 
-
   harvestDays (date, plant, startDate){
-    console.log("harvestDays date", date );
-    console.log("harvestDays plant", plant.plantToFruit );
-    console.log("startDate", startDate );
+    // console.log("harvestDays date", date );
+    // console.log("harvestDays plant", plant.plantToFruit );
+    // console.log("startDate", startDate );
 
     const harvestDate = moment(startDate).add(plant.plantToFruit, 'days').format("YYYY-MM-DD");
 
-    console.log("harvestDate", harvestDate);
+    // console.log("harvestDate", harvestDate);
   },
 
+  makeCalendar(startDate, endDate){
+    let calendarBlock = [];
+    let dayBlock = [];
+    const start = moment(startDate).startOf('month');
+    const end = moment(endDate).endOf('month');
+    const monthCount = end.diff(start, 'months', true);
+
+    for (let i = 0; i < monthCount; i++){
+      let monthBlock = [];
+      const monthInQuestion = moment(start).add(i, 'month');
+      const daysCount = moment(monthInQuestion).daysInMonth();
+      for (let j=0; j < daysCount; j ++){
+        const dayInQuestion = moment(monthInQuestion).add(j, 'day');
+        const dayData = {
+          "date": dayInQuestion.format('YYYY-MM-DD'),
+          "idealFor": this.idealFor( dayInQuestion.format('YYYY-MM-DD') ),   
+        }
+        monthBlock.push(dayData);
+      }
+
+      const monthNumber = parseInt(monthInQuestion.format("M") ) - 1; // Because avg temp list starts at 0
+
+      const monthData = {
+        "monthStart": monthInQuestion.format("YYYY-MM-DD"),
+        "avgMinTemp": this.averageTemp()[monthNumber].avgMin,
+        "avgMaxTemp": this.averageTemp()[monthNumber].avgMax,
+        "days": monthBlock
+      }
+      calendarBlock.push(monthData);
+    }
+
+    console.log('calendarBlock', calendarBlock);
+    return calendarBlock;
+  }
 
 }
 

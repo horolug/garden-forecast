@@ -41,7 +41,7 @@ class Germination extends React.Component {
     for(let f = 0; f < 38; f++){
       if ( f % 5 === 0  || f === 0 || f === 38 ){
         tempRange.push(
-           <div className="col">{f}</div>
+           <div className="col" key={f}>{f}</div>
         )
       }
     };
