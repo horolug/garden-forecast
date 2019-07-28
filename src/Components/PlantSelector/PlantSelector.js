@@ -1,11 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import moment from 'moment'
 import PlantingCalendar from '../Calendar/Calendar';
 import helpers from '../Helpers/Helpers';
 import RadioToggle from '../Helpers/RadioToggle';
 import Germination from '../Charts/GerminationChart';
-import Plant from '../PlantList/PlantSelection';
 import PlantCard from '../PlantCard/PlantCard';
 
 class PlantSelector extends React.Component {
@@ -107,6 +106,9 @@ class PlantSelector extends React.Component {
     return plant;
   }
 
+  makePlantLink(id){
+    return "/sodinimas/"+id
+  }
   render() {
     return (
       <div>
@@ -123,10 +125,14 @@ class PlantSelector extends React.Component {
           <div>
             <div className="d-flex justify-content-center mb-4">
               {this.state.plantArray.map((item, index) => ( 
-                <Plant
-                  id={item.id}
-                  key={item.id} 
-                  name={item.name} />  
+                <NavLink 
+                  key={item.id}
+                  to={this.makePlantLink(item.id)}
+                  role="button" 
+                  className='btn btn-outline-primary ml-1 mr-1'
+                  >
+                  {item.name}
+                </NavLink> 
               ))} 
             </div>
 
