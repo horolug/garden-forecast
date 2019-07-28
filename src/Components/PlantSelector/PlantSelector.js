@@ -1,9 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import moment from 'moment'
-import PlantingCalendar from '../Calendar/Calendar';
 import helpers from '../Helpers/Helpers';
-import RadioToggle from '../Helpers/RadioToggle';
 import Germination from '../Charts/GerminationChart';
 import PlantCard from '../PlantCard/PlantCard';
 
@@ -109,6 +107,7 @@ class PlantSelector extends React.Component {
   makePlantLink(id){
     return "/sodinimas/"+id
   }
+  
   render() {
     return (
       <div>
@@ -139,30 +138,10 @@ class PlantSelector extends React.Component {
             {/* <Route path="/" exact component={PlantCard} /> */}
             <Route 
               path="/sodinimas/" 
-              render={(props) => <PlantCard {...props} plant={this.selectedPlant()} />}
+              render={(props) => <PlantCard {...props} adjustTemperature={this.adjustTemperature} plant={this.selectedPlant()} />}
             />
           </div>
         </Router>
-
-        <div className="row">
-          <p>Pasirinkite kur bus siejamos sėklos</p>
-          <p>Pagal nutylėjimą skaičiuoklė numato kad bus siejamą į atvirą gruntą</p>
-        </div>
-
-        <RadioToggle
-          onChange={this.adjustTemperature}
-         />
-        <div className="row" >
-          <div className="col mt-4">
-            <p>Seeding / propagation advice is shown here </p>
-
-            {/* <PlantingCalendar
-              monthRange={this.state.monthCount}
-              adjustedTemp={this.state.adjustedTemp}
-              plant={this.state.selectedPlant}
-             /> */}
-          </div>
-        </div>
 
         <Germination
           plants = {this.state.plantArray}/>
