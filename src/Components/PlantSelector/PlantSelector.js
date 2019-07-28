@@ -1,11 +1,12 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import moment from 'moment'
-import CallDarkSky from '../DarkSky/DarkSky';
 import PlantingCalendar from '../Calendar/Calendar';
 import helpers from '../Helpers/Helpers';
 import RadioToggle from '../Helpers/RadioToggle';
 import Germination from '../Charts/GerminationChart';
 import Plant from '../PlantList/PlantSelection';
+import PlantCard from '../PlantCard/PlantCard';
 
 class PlantSelector extends React.Component {
 
@@ -22,7 +23,7 @@ class PlantSelector extends React.Component {
           id: "carrot",
           type: "root",
           variety: "orange",
-          seedtoPlant: 7-10,
+          seedtoPlant: [7, 10],
           plantToFruit: 75,
           minTemp: 4,
           optimalRange: [7, 30]
@@ -32,7 +33,7 @@ class PlantSelector extends React.Component {
           id: "raddish",
           type: "root",
           variety: "big",
-          seedtoPlant: 3-8,
+          seedtoPlant: [3, 8],
           plantToFruit: 25,
           minTemp: 7,
           optimalRange: [9, 29]
@@ -42,7 +43,7 @@ class PlantSelector extends React.Component {
           id: "tomato",
           type: "fruit",
           variety: "cherry",
-          seedtoPlant: 6-14,
+          seedtoPlant: [6, 14],
           plantToFruit: 27,
           minTemp: 10,
           optimalRange: [16, 30]
@@ -52,7 +53,7 @@ class PlantSelector extends React.Component {
           id: "pumpkin",
           type: "fruit",
           variety: "round",
-          seedtoPlant: 6-10,
+          seedtoPlant: [6, 10],
           plantToFruit: 27,
           minTemp: 16,
           optimalRange: [21, 32]
@@ -62,7 +63,7 @@ class PlantSelector extends React.Component {
           id: "spinatch",
           type: "seed",
           variety: "green",
-          seedtoPlant: 10-18,
+          seedtoPlant: [10, 18],
           plantToFruit: 41,
           minTemp: 7,
           optimalRange: [10, 21]
@@ -72,7 +73,7 @@ class PlantSelector extends React.Component {
           id: "lettuce",
           type: "seed",
           variety: "sweet",
-          seedtoPlant: 6-10,
+          seedtoPlant: [6, 10],
           plantToFruit: 50,
           minTemp: 2,
           optimalRange: [4, 27]
@@ -101,21 +102,12 @@ class PlantSelector extends React.Component {
     return monthList;
   }
 
-  selectedPlant (event) {
-    event.preventDefault();
-    console.log("event", event.target);
-    // FIXME selected plant and plant type are most likely redundant
-    // const plant = this.state.plantList[event.target.id].find(obj => obj.name === event.target.value);
-
-    // this.setState({
-    //   selectedPlant: plant,
-    //   plantName: event.target.value,
-    //   plantType: event.target.id,
-    // });
+  selectedPlant (){
+    const plant = this.state.plantArray.find(x => x.id === window.location.pathname.split("/").pop());   
+    return plant;
   }
 
   render() {
-
     return (
       <div>
         <div className="row">
@@ -126,15 +118,26 @@ class PlantSelector extends React.Component {
         <div className="row">
           <p>Pasirinkite kas bus siejama</p>
         </div>
-        <div className="d-flex justify-content-center mb-4">
-          {this.state.plantArray.map((item, index) => ( 
-            <Plant
-              onClick={this.selectedPlant}
-              id={item.id}
-              key={item.id} 
-              name={item.name} />  
-          ))} 
-        </div>
+        
+        <Router>
+          <div>
+            <div className="d-flex justify-content-center mb-4">
+              {this.state.plantArray.map((item, index) => ( 
+                <Plant
+                  id={item.id}
+                  key={item.id} 
+                  name={item.name} />  
+              ))} 
+            </div>
+
+            {/* <Route path="/" exact component={PlantCard} /> */}
+            <Route 
+              path="/sodinimas/" 
+              render={(props) => <PlantCard {...props} plant={this.selectedPlant()} />}
+            />
+          </div>
+        </Router>
+
         <div className="row">
           <p>Pasirinkite kur bus siejamos sėklos</p>
           <p>Pagal nutylėjimą skaičiuoklė numato kad bus siejamą į atvirą gruntą</p>
@@ -147,11 +150,11 @@ class PlantSelector extends React.Component {
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
 
-            <PlantingCalendar
+            {/* <PlantingCalendar
               monthRange={this.state.monthCount}
               adjustedTemp={this.state.adjustedTemp}
               plant={this.state.selectedPlant}
-             />
+             /> */}
           </div>
         </div>
 
