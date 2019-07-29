@@ -107,7 +107,7 @@ class PlantSelector extends React.Component {
   makePlantLink(id){
     return "/sodinimas/"+id
   }
-  
+
   render() {
     return (
       <div>
@@ -135,16 +135,15 @@ class PlantSelector extends React.Component {
               ))} 
             </div>
 
-            {/* <Route path="/" exact component={PlantCard} /> */}
+            <Route 
+              path="/" exact
+              render={(props) => <Germination {...props} plants = {this.state.plantArray} />}/>
             <Route 
               path="/sodinimas/" 
               render={(props) => <PlantCard {...props} adjustTemperature={this.adjustTemperature} plant={this.selectedPlant()} />}
             />
           </div>
         </Router>
-
-        <Germination
-          plants = {this.state.plantArray}/>
 
       </div>
     );

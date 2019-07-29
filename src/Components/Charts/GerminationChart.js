@@ -20,7 +20,6 @@ class Germination extends React.Component {
     let rangeList = [];
 
     for ( let i = 0; i < this.props.plants.length; i++ ){
-      console.log("====");
       const left = this.props.plants[i].optimalRange[0] / chartMax*100;
       const width = ( (this.props.plants[i].optimalRange[1] / chartMax) -
                       (this.props.plants[i].optimalRange[0] / chartMax)
