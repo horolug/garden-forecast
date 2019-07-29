@@ -81,6 +81,7 @@ class PlantSelector extends React.Component {
   }
 
   adjustTemperature = (data) => {
+    console.log('adjust temp called');
     this.setState({
       adjustedTemp : data
     });

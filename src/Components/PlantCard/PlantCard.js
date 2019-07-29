@@ -9,12 +9,9 @@ class plantCard extends React.Component {
     this.state = {
       plant: this.props.plant,
     };
-    
   }
 
   render() {
-    // console.log(   window.location.pathname.split("/").pop() ) ;
-    // console.log("plant", this.state.plant.name );
     return (
       <div>
         <h1>This is plant card for {this.props.plant.name} </h1>
@@ -32,11 +29,13 @@ class plantCard extends React.Component {
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
 
-            {/* <PlantingCalendar
-              monthRange={this.state.monthCount}
+            <PlantingCalendar
+              calendarStart="2019-02-01"
+              calendarEnd="2019-08-22"
               adjustedTemp={this.state.adjustedTemp}
-              plant={this.state.selectedPlant}
-             /> */}
+              plant={this.props.plant}
+             />
+
           </div>
         </div>
       </div>
