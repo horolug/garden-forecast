@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import 'moment/locale/lt';
 import helpers from '../Helpers/Helpers';
+import { throwStatement } from '@babel/types';
 
 moment.locale('lt');
 
@@ -25,14 +26,14 @@ class PlantingCalendar extends React.Component {
         );
       }
     }
-
     return blankCells;
   }
+ 
 
   createDayCells(month, counter){
     let listOfDays = this.createBlankCells( month.monthStart );
     const plantType = this.props.plant.type;
-    
+
     // badge to be used only in harvest cycle calculations
     // const badge = <span className="badge badge-pill badge-primary">{cycleCounter}</span>;
     // isOptimalForPlanting should match month avg temp with plant temp requirements
@@ -52,7 +53,7 @@ class PlantingCalendar extends React.Component {
       const calendarDay = moment(month.days[j].date).format("D");
 
       listOfDays.push(
-        <div className={optimal} key={month.days[j].date}>
+        <div className={optimal} onClick={ () => this.props.handleDayClick(month.days[j].date) } key={month.days[j].date}>
           {calendarDay}
         </div>
       );    

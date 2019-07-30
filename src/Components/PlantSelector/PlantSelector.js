@@ -87,6 +87,10 @@ class PlantSelector extends React.Component {
     });
   }
 
+  saveEntry = (data) => {
+    console.log(data);
+  }
+
   timeRange (){
     const currentMonth = moment().startOf('month');
     const months = 6;
@@ -141,7 +145,7 @@ class PlantSelector extends React.Component {
               render={(props) => <Germination {...props} plants = {this.state.plantArray} />}/>
             <Route 
               path="/sodinimas/" 
-              render={(props) => <PlantCard {...props} adjustTemperature={this.adjustTemperature} plant={this.selectedPlant()} />}
+              render={(props) => <PlantCard {...props} saveEntry={this.saveEntry} adjustTemperature={this.adjustTemperature} plant={this.selectedPlant()} />}
             />
           </div>
         </Router>
