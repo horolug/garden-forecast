@@ -172,7 +172,13 @@ class PlantSelector extends React.Component {
               render={(props) => <Germination {...props} plants = {this.state.plantArray} />}/>
             <Route 
               path="/sodinimas/" 
-              render={(props) => <PlantCard {...props} savedList={this.state.savedList} removeEntry={this.removeEntry} saveEntry={this.saveEntry} adjustTemperature={this.adjustTemperature} plant={this.selectedPlant()} />}
+              render={(props) => <PlantCard {...props} 
+                                    savedList={this.state.savedList} 
+                                    removeEntry={this.removeEntry} 
+                                    saveEntry={this.saveEntry} 
+                                    handleDayClick={this.handleDayClick}
+                                    adjustTemperature={this.adjustTemperature} 
+                                    plant={this.selectedPlant()} />}
             />
           </div>
         </Router>

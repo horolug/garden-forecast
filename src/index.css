@@ -25,3 +25,7 @@ code {
 .currentDay{
   border: 1px solid green;
 }
+
+.user-selected{
+  border: 1px solid blue;
+}

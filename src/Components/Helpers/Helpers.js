@@ -276,7 +276,6 @@ const helpers = {
       calendarBlock.push(monthData);
     }
 
-    console.log('calendarBlock', calendarBlock);
     return calendarBlock;
   }
 

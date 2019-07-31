@@ -14,13 +14,7 @@ class plantCard extends React.Component {
     };
   }
 
-  handleDayClick = (calendarDay) => {
-    const entryData = {
-      date: calendarDay,
-      plant: this.props.plant
-    }
-    console.log("handleDayClick works");
-    
+  handleDayClick = (calendarDay) => {    
     this.setState({
       selectedDay: calendarDay
     });
@@ -52,6 +46,7 @@ class plantCard extends React.Component {
                   handleDayClick={this.handleDayClick}
                   adjustedTemp={this.state.adjustedTemp}
                   plant={this.props.plant}
+                  selectedDay={this.state.selectedDay}
                 />
               </div>
               <div className="col">

@@ -50,17 +50,23 @@ class PlantingCalendar extends React.Component {
       if (month.days[j].idealFor === plantType){
         optimal = "optimal " + this.currentDay(month.days[j].date );
       }
+      
+      if ( month.days[j].date === this.props.selectedDay ){
+        optimal = optimal + " user-selected"
+      }
+
       const calendarDay = moment(month.days[j].date).format("D");
 
       listOfDays.push(
-        <div className={optimal} onClick={ () => this.props.handleDayClick(month.days[j].date) } key={month.days[j].date}>
+        <div className={optimal} 
+          onClick={ () => this.props.handleDayClick(month.days[j].date) } 
+          key={month.days[j].date}>
           {calendarDay}
         </div>
       );    
     }
 
     return listOfDays;
-
   }
 
   createTableRows(month, counter){
