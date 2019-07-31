@@ -10,6 +10,7 @@ class plantCard extends React.Component {
     super(props);
     this.state = {
       plant: this.props.plant,
+      selectedDay: "",
     };
   }
 
@@ -19,8 +20,9 @@ class plantCard extends React.Component {
       plant: this.props.plant
     }
     console.log("handleDayClick works");
+    
     this.setState({
-      entryData: entryData
+      selectedDay: calendarDay
     });
   }
 
@@ -53,7 +55,13 @@ class plantCard extends React.Component {
                 />
               </div>
               <div className="col">
-                <PlannerSidebar/>
+                <PlannerSidebar 
+                  saveEntry={this.props.saveEntry}
+                  removeEntry={this.props.removeEntry}
+                  selectedDay={this.state.selectedDay}
+                  plant={this.props.plant}
+                  savedList={this.props.savedList}
+                />
               </div>
             </div>
             

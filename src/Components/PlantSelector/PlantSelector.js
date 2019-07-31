@@ -14,6 +14,7 @@ class PlantSelector extends React.Component {
       monthRange: this.timeRange(),
       adjustedTemp: "normal",
       monthCount: 6,
+      savedList: [],
       plantArray: [
         {
           name: "carrot",
@@ -87,9 +88,35 @@ class PlantSelector extends React.Component {
     });
   }
 
-  saveEntry = (data) => {
-    console.log(data);
+  saveEntry = (selectedDate) => {
+    const selectedPlant = this.selectedPlant();
+    const entryID = selectedDate+"-"+selectedPlant.id;
+    const savedList = this.state.savedList;
+
+    if (savedList.some(e => e.entryID === entryID)) {
+      return false;     
+    } else {
+      const newEntry = {
+        selectedDate: selectedDate,
+        plant: selectedPlant,
+        entryID: entryID
+      } 
+      this.setState(prevState => ({
+        savedList: [...prevState.savedList, newEntry]
+      }))
+    }
+    
   }
+
+  removeEntry = (entryID) => {
+    let savedList = this.state.savedList.slice(0);
+    const entryIndex = savedList.findIndex(x => x.entryID === entryID);
+    savedList.splice(entryIndex, 1);
+    this.setState({
+      savedList: savedList
+    });
+  }
+
 
   timeRange (){
     const currentMonth = moment().startOf('month');
@@ -145,7 +172,7 @@ class PlantSelector extends React.Component {
               render={(props) => <Germination {...props} plants = {this.state.plantArray} />}/>
             <Route 
               path="/sodinimas/" 
-              render={(props) => <PlantCard {...props} saveEntry={this.saveEntry} adjustTemperature={this.adjustTemperature} plant={this.selectedPlant()} />}
+              render={(props) => <PlantCard {...props} savedList={this.state.savedList} removeEntry={this.removeEntry} saveEntry={this.saveEntry} adjustTemperature={this.adjustTemperature} plant={this.selectedPlant()} />}
             />
           </div>
         </Router>
