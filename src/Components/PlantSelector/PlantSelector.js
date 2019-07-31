@@ -101,9 +101,12 @@ class PlantSelector extends React.Component {
         plant: selectedPlant,
         entryID: entryID
       } 
-      this.setState(prevState => ({
-        savedList: [...prevState.savedList, newEntry]
-      }))
+      const updatedlList = this.state.savedList.slice(0);
+      updatedlList.unshift(newEntry);
+
+      this.setState({
+        savedList: updatedlList
+      })
     }
     
   }
