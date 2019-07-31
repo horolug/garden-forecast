@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'moment';
 import 'moment/locale/lt';
 import helpers from '../Helpers/Helpers';
-import { throwStatement } from '@babel/types';
 
 moment.locale('lt');
 

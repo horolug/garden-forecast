@@ -56,6 +56,8 @@ class plantCard extends React.Component {
                   selectedDay={this.state.selectedDay}
                   plant={this.props.plant}
                   savedList={this.props.savedList}
+                  selectedDay={this.state.selectedDay}
+
                 />
               </div>
             </div>
