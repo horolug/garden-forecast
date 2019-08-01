@@ -1,5 +1,6 @@
 import React from 'react';
 import RadioToggle from '../Helpers/RadioToggle';
+import DateRange from '../DateRange/DateeRange';
 import PlantingCalendar from '../Calendar/Calendar';
 import PlannerSidebar from '../Planner/PlannerSidebar';
 
@@ -23,13 +24,11 @@ class plantCard extends React.Component {
   render() {
     return (
       <div>
-        <h1>This is plant card for {this.props.plant.name} </h1>
-
         <div className="row">
           <p>Pasirinkite kur bus siejamos sėklos</p>
           <p>Pagal nutylėjimą skaičiuoklė numato kad bus siejamą į atvirą gruntą</p>
         </div>
-
+        <DateRange />
         <RadioToggle
           onChange={this.props.adjustTemperature}
         />
