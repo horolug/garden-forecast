@@ -107,8 +107,7 @@ class PlantSelector extends React.Component {
       this.setState({
         savedList: updatedlList
       })
-    }
-    
+    } 
   }
 
   removeEntry = (entryID) => {
@@ -141,6 +140,10 @@ class PlantSelector extends React.Component {
 
   makePlantLink(id){
     return "/sodinimas/"+id
+  }
+
+  plannerDates = ( data ) => {
+    console.log("planner dates");
   }
 
   render() {
@@ -181,6 +184,7 @@ class PlantSelector extends React.Component {
                                     saveEntry={this.saveEntry} 
                                     handleDayClick={this.handleDayClick}
                                     adjustTemperature={this.adjustTemperature} 
+                                    plannerDates={this.plannerDates}
                                     plant={this.selectedPlant()} />}
             />
           </div>

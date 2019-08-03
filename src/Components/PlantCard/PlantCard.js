@@ -28,7 +28,9 @@ class plantCard extends React.Component {
           <p>Pasirinkite kur bus siejamos sėklos</p>
           <p>Pagal nutylėjimą skaičiuoklė numato kad bus siejamą į atvirą gruntą</p>
         </div>
-        <DateRange />
+        <DateRange 
+          plannerDates={this.props.plannerDates}
+        />
         <RadioToggle
           onChange={this.props.adjustTemperature}
         />

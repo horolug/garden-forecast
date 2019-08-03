@@ -5,7 +5,16 @@ class DateRange extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+    };
+  }
+
+  monthSelect(){
+    console.log("monthSelect called");
+  }
+
+  yearSelect( ){
+    console.log("yearSelect called");
   }
 
   render() {  
@@ -14,20 +23,47 @@ class DateRange extends React.Component {
 
     const monthNames = moment.months();
     const monthList = monthNames.map( (item, index) => 
-      <div key={index} className="btn btn-outline-primary m-1">{item} </div> 
+      <div className="form-check form-check-inline" key={index}> 
+        <input className="form-check-input"
+          onChange={ () =>this.monthSelect() }
+          type="checkbox" value="" id={"monthIndex"+index} />
+        <label className="form-check-label" htmlFor={"monthIndex"+index}>
+          {item}
+        </label>
+      </div>        
     );
-    console.log('monthNames', monthNames);
-    console.log('monthlist', monthList);
+    
     return (
       <div>
         <p>Year - select year</p>
-        <div >
-          <button className="btn btn-outline-primary m-1"> {currentYear.format("YYYY")}</button>
-          <button className="btn btn-outline-primary m-1"> {nexYear.format("YYYY")}</button>
+        <div className="">
+          <div className="form-check form-check-inline" > 
+            <input
+              onChange={() =>this.yearSelect()}
+              className="form-check-input" type="checkbox" value="" id={"year-"+nexYear.format("YYYY")} />
+            <label className="form-check-label" htmlFor={"year-"+nexYear.format("YYYY")}>
+              {currentYear.format("YYYY")}
+            </label>
+          </div>  
+          <div className="form-check form-check-inline"> 
+            <input
+              onChange={() =>this.yearSelect()}
+              className="form-check-input" type="checkbox" value="" id={"year-"+nexYear.format("YYYY")} />
+            <label className="form-check-label" htmlFor={"year-"+nexYear.format("YYYY")}>
+              {nexYear.format("YYYY")}
+            </label>
+          </div>  
+  
+          <p>Months - select montRange</p>
+          <div>        
+            {monthList}
+          </div>
         </div>
-        <p>Months - select montRange</p>
-        <div>        
-          {monthList}
+        
+        <div> 
+          <button className="btn btn-primary"
+            onClick={() => this.props.plannerDates("foo")}
+          >Pasirinkti </button>
         </div>
       </div>
       
