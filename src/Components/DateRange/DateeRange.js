@@ -21,30 +21,24 @@ class DateRange extends React.Component {
   }
 
   monthSelect = (event, rangeStart) => {
-
-    // console.log("formatted", moment(event.target.value).format("YYYY-MM-DD") );
-    const selectedDate = moment(event.target.value).format("YYYY-MM-DD");
-
     if (rangeStart){
       this.setState({
-        startDate: selectedDate
+        startDate: event.target.value
       })
   
     } else {
       this.setState({
-        endDate: selectedDate
+        endDate: event.target.value
       })
     }
   }
 
   yearSelect = (event, rangeStart) => {
     if (rangeStart){
-      console.log("start range is firing", event.target.value);
       this.setState({
         startDate: event.target.value
       })
     } else {
-      console.log("end range is firing", event.target.value);
       this.setState({
         endDate: event.target.value
       })
@@ -56,9 +50,6 @@ class DateRange extends React.Component {
   }
 
   render() {  
-    // console.log("startDate", this.state.startDate );
-    // console.log("endDate", this.state.endDate );
-
     return (
       <div>
         <p>Year - select year</p>
@@ -72,12 +63,10 @@ class DateRange extends React.Component {
               yearSelect={this.yearSelect}
             />
             <MonthRadio 
-              startYear={moment().format("YYYY")}
-              startDate={this.state.startDate}
-              endDate={this.state.endDate}
               monthSelect={this.monthSelect}
               rangeStart={true}
               beginDate={this.state.startDate}
+              endDate={this.state.endDate}
             />
           </div>
 
@@ -90,12 +79,10 @@ class DateRange extends React.Component {
               yearSelect={this.yearSelect}
             />
             <MonthRadio 
-              startYear={moment().format("YYYY")}
-              startDate={this.state.startDate}
-              endDate={this.state.endDate}
               monthSelect={this.monthSelect}
               rangeStart={false}
               beginDate={this.state.startDate}
+              endDate={this.state.endDate}
             />
           </div>
 
