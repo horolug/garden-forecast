@@ -3,16 +3,12 @@ import moment from 'moment';
 import MonthRadio from './MonthRadio';
 import YearRadio from './YearRadio';
 
-
 class DateRange extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      monthRangeStart: "",
-      monthRangeEnd: "",
-      yearRangeStart: "",
-      yearRangeEnd: ""
+      startDate: moment().startOf('year').format("YYYY-MM-DD"),
+      endDate: moment().startOf('year').format("YYYY-MM-DD")
     };
   }
 
@@ -20,47 +16,49 @@ class DateRange extends React.Component {
     console.log('make new calendar based on provided range');
   }
 
-  monthSelect = (rangeStart, monthName) => {
+  makeStartDate(){
+    return moment().startOf('year').format("YYYY-MM-DD");
+  }
+
+  monthSelect = (event, rangeStart) => {
+
+    // console.log("formatted", moment(event.target.value).format("YYYY-MM-DD") );
+    const selectedDate = moment(event.target.value).format("YYYY-MM-DD");
+
     if (rangeStart){
       this.setState({
-        monthRangeStart: monthName
+        startDate: selectedDate
       })
   
     } else {
       this.setState({
-        monthRangeEnd: monthName
+        endDate: selectedDate
       })
     }
   }
 
-  yearSelect = (rangeStart, year) => {
+  yearSelect = (event, rangeStart) => {
     if (rangeStart){
+      console.log("start range is firing", event.target.value);
       this.setState({
-        yearRangeStart: year
+        startDate: event.target.value
       })
-  
     } else {
+      console.log("end range is firing", event.target.value);
       this.setState({
-        yearRangeEnd: year
+        endDate: event.target.value
       })
     }
   }
 
   isDisabled(){
-    if( 
-      this.state.monthRangeStart.length > 0 && 
-      this.state.monthRangeEnd.length > 0 && 
-      this.state.yearRangeStart.length > 0 && 
-      this.state.yearRangeEnd.length > 0 ){
-        return false;
-      }
-    return true;
+    return false;
   }
 
   render() {  
-    const currentYear = moment().startOf('year');
-    const nexYear = moment(currentYear).add(1, 'year');    
-  
+    // console.log("startDate", this.state.startDate );
+    // console.log("endDate", this.state.endDate );
+
     return (
       <div>
         <p>Year - select year</p>
@@ -69,14 +67,17 @@ class DateRange extends React.Component {
             <h3>From</h3>
             <YearRadio 
               rangeStart={true}
-              currentYear={currentYear.format("YYYY")}
-              nexYear={nexYear.format("YYYY")}
+              beginDate={this.state.startDate}
+              endDate={this.state.endDate}
               yearSelect={this.yearSelect}
             />
             <MonthRadio 
-              monthNames={moment.months()}
+              startYear={moment().format("YYYY")}
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
               monthSelect={this.monthSelect}
               rangeStart={true}
+              beginDate={this.state.startDate}
             />
           </div>
 
@@ -84,14 +85,17 @@ class DateRange extends React.Component {
             <h3>To</h3>
             <YearRadio 
               rangeStart={false}
-              currentYear={currentYear.format("YYYY")}
-              nexYear={nexYear.format("YYYY")}
+              beginDate={this.state.startDate}
+              endDate={this.state.endDate}
               yearSelect={this.yearSelect}
             />
             <MonthRadio 
-              monthNames={moment.months()}
+              startYear={moment().format("YYYY")}
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
               monthSelect={this.monthSelect}
               rangeStart={false}
+              beginDate={this.state.startDate}
             />
           </div>
 
