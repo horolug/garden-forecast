@@ -16,6 +16,12 @@ class YearRadio extends React.Component {
     return false;
   }
 
+  resetRadio ( srartDate, endDate ){
+    if (  this.radioDisabled( srartDate, endDate) ){
+      return false;
+    }
+  }
+
   render() {
 
     const radioName = this.props.rangeStart ? 'yearRangeStart' : 'yearRangeEnd';
@@ -37,6 +43,7 @@ class YearRadio extends React.Component {
               className="form-check-input" 
               name={radioName} 
               type="radio" 
+              checked={this.resetRadio( this.props.beginDate, thisYear) }
               disabled={this.radioDisabled(this.props.beginDate, thisYear )}
               value={thisYear} 
               id={"yearA-"+radioName+"-"+thisYear} />

@@ -15,6 +15,14 @@ class MonthRadio extends React.Component {
     return false;
   }
 
+  resetRadio ( srartDate, endDate ){
+
+    if (  this.radioDisabled( srartDate, endDate) ){
+      return false;
+    }
+
+  }
+
   makeMonthDate( index, startYear, endYear ){
     
 
@@ -41,6 +49,7 @@ class MonthRadio extends React.Component {
           name={radioName} 
           value={ this.makeMonthDate(index, startYear, endYear) } 
           id={radioName+index}
+          checked={this.resetRadio( this.props.beginDate, moment([endYear, index]).format("YYYY-MM-DD") ) }
           disabled={this.radioDisabled( this.props.beginDate, moment([endYear, index]).format("YYYY-MM-DD")  )} />
         <label className="form-check-label" htmlFor={radioName+index}>
           {item}
