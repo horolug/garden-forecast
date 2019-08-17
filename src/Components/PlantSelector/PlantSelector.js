@@ -129,7 +129,7 @@ class PlantSelector extends React.Component {
        moment(currentMonth).add(i, 'M').startOf('month').format("YYYY-MM-DD")
      )
     }
-
+    console.log('timeRange is returning', monthList);
     return monthList;
   }
 
@@ -142,10 +142,14 @@ class PlantSelector extends React.Component {
     return "/sodinimas/"+id
   }
 
-  plannerDates = ( data ) => {
-    console.log("planner dates");
+  plannerDates = ( calendarStart, calendarEnd ) => {
+    this.setState({
+      calendarStart: calendarStart,
+      calendarEnd: calendarEnd
+    })
+    // return calendarRange;
   }
-
+     
   render() {
     return (
       <div>
@@ -185,6 +189,8 @@ class PlantSelector extends React.Component {
                                     handleDayClick={this.handleDayClick}
                                     adjustTemperature={this.adjustTemperature} 
                                     plannerDates={this.plannerDates}
+                                    calendarStart={this.state.calendarStart}
+                                    calendarEnd={this.state.calendarEnd}
                                     plant={this.selectedPlant()} />}
             />
           </div>

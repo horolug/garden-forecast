@@ -22,6 +22,7 @@ class plantCard extends React.Component {
   }
 
   render() {
+
     return (
       <div>
         <div className="row">
@@ -38,11 +39,14 @@ class plantCard extends React.Component {
         <div className="row" >
           <div className="col mt-4">
             <p>Seeding / propagation advice is shown here </p>
+            <p>start {this.props.plannerDates[0]}</p>
+            <p>end {this.props.plannerDates[1]}</p>
+
             <div className="row">
               <div className="col">
                 <PlantingCalendar
-                  calendarStart="2019-02-01"
-                  calendarEnd="2019-08-22"
+                  calendarStart={this.props.calendarStart}
+                  calendarEnd={this.props.calendarEnd}
                   saveEntry={this.props.saveEntry}
                   handleDayClick={this.handleDayClick}
                   adjustedTemp={this.state.adjustedTemp}

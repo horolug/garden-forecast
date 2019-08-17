@@ -15,12 +15,23 @@ class MonthRadio extends React.Component {
     return false;
   }
 
+  makeMonthDate( index, startYear, endYear ){
+    
+
+    if ( this.props.rangeStart){
+      return moment([startYear, index]).format("YYYY-MM-DD");
+    } 
+
+    return moment([endYear, index]).format("YYYY-MM-DD");
+  }
+
+
   render() {
     const monthNames = moment.months();
     const radioName = this.props.rangeStart ? 'monthRangeStart' : 'monthRangeEnd';
-    
     const startYear = moment(this.props.beginDate).format("YYYY");
     const endYear = moment(this.props.endDate).format("YYYY");
+   
 
     const monthList = monthNames.map( (item, index) => 
       <div className="form-check" key={index}> 
@@ -28,7 +39,7 @@ class MonthRadio extends React.Component {
           onChange={ (e) => this.props.monthSelect(e, this.props.rangeStart) }
           type="radio"
           name={radioName} 
-          value={ moment([startYear, index]).format("YYYY-MM-DD") } 
+          value={ this.makeMonthDate(index, startYear, endYear) } 
           id={radioName+index}
           disabled={this.radioDisabled( this.props.beginDate, moment([endYear, index]).format("YYYY-MM-DD")  )} />
         <label className="form-check-label" htmlFor={radioName+index}>

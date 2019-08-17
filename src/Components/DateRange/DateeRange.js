@@ -12,8 +12,9 @@ class DateRange extends React.Component {
     };
   }
 
-  selectedRange(){
+  selectedRange(calendarStart, calendarEnd){
     console.log('make new calendar based on provided range');
+    this.props.plannerDates(calendarStart, calendarEnd);
   }
 
   makeStartDate(){
@@ -92,7 +93,7 @@ class DateRange extends React.Component {
           <button 
             disabled={this.isDisabled()}
             className="btn btn-primary"
-            onClick={() => this.selectedRange()}
+            onClick={() => this.selectedRange(this.state.startDate, this.state.endDate)}
           >Pasirinkti </button>
         </div>
       </div>
