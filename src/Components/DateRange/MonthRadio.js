@@ -5,27 +5,37 @@ class MonthRadio extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      radioSelected: this.props.beginDate
+    };
   }
 
-  radioDisabled( srartDate, endDate){
-    if ( moment(endDate).isBefore(srartDate) &&  !this.props.rangeStart ){
+  radioDisabled( index ){
+    const endYear = moment(this.props.endDate).format("YYYY");
+    const endDate = moment([endYear, index]).format("YYYY-MM-DD");
+    if ( moment(endDate).isBefore( this.props.beginDate ) &&  !this.props.rangeStart ){
       return true;
     }
     return false;
   }
 
-  resetRadio ( srartDate, endDate ){
-
-    if (  this.radioDisabled( srartDate, endDate) ){
-      return false;
+  checkedRadio ( index ){
+    const startYear = moment(this.props.beginDate).format("YYYY");
+    const endYear = moment(this.props.endDate).format("YYYY");
+    if ( !this.props.rangeStart){      
+      if( moment([endYear, index]).format("YYYY-MM-DD") ===  this.props.checkedRadio ){
+        return true;
+      } 
+    } else {
+      if( moment([startYear, index]).format("YYYY-MM-DD") ===  this.props.checkedRadio ){
+        return true;
+      } 
     }
-
+    
+    return false;
   }
 
   makeMonthDate( index, startYear, endYear ){
-    
-
     if ( this.props.rangeStart){
       return moment([startYear, index]).format("YYYY-MM-DD");
     } 
@@ -37,9 +47,9 @@ class MonthRadio extends React.Component {
   render() {
     const monthNames = moment.months();
     const radioName = this.props.rangeStart ? 'monthRangeStart' : 'monthRangeEnd';
+    
     const startYear = moment(this.props.beginDate).format("YYYY");
     const endYear = moment(this.props.endDate).format("YYYY");
-   
 
     const monthList = monthNames.map( (item, index) => 
       <div className="form-check" key={index}> 
@@ -49,8 +59,8 @@ class MonthRadio extends React.Component {
           name={radioName} 
           value={ this.makeMonthDate(index, startYear, endYear) } 
           id={radioName+index}
-          checked={this.resetRadio( this.props.beginDate, moment([endYear, index]).format("YYYY-MM-DD") ) }
-          disabled={this.radioDisabled( this.props.beginDate, moment([endYear, index]).format("YYYY-MM-DD")  )} />
+          checked={this.checkedRadio( index ) }
+          disabled={this.radioDisabled( index  )} />
         <label className="form-check-label" htmlFor={radioName+index}>
           {item}
         </label>

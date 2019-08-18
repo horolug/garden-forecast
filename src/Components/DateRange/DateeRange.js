@@ -22,14 +22,26 @@ class DateRange extends React.Component {
   }
 
   monthSelect = (event, rangeStart) => {
+    let endDate = this.state.endDate;
+  
+   
     if (rangeStart){
+      if ( moment( this.state.endDate ).isBefore( event.target.value ) ){
+        endDate = event.target.value ;
+      }
+
       this.setState({
-        startDate: event.target.value
+        startDate: event.target.value,
+        endDate: endDate
       })
   
     } else {
+      if ( moment( event.target.value ).isBefore( this.state.startDate ) ){
+        endDate = this.state.startDate;
+      }
+
       this.setState({
-        endDate: event.target.value
+        endDate: endDate
       })
     }
   }
@@ -68,6 +80,7 @@ class DateRange extends React.Component {
               rangeStart={true}
               beginDate={this.state.startDate}
               endDate={this.state.endDate}
+              checkedRadio={this.state.startDate}
             />
           </div>
 
@@ -84,6 +97,7 @@ class DateRange extends React.Component {
               rangeStart={false}
               beginDate={this.state.startDate}
               endDate={this.state.endDate}
+              checkedRadio={this.state.endDate}
             />
           </div>
 
