@@ -43,7 +43,6 @@ class MonthRadio extends React.Component {
     return moment([endYear, index]).format("YYYY-MM-DD");
   }
 
-
   render() {
     const monthNames = moment.months();
     const radioName = this.props.rangeStart ? 'monthRangeStart' : 'monthRangeEnd';

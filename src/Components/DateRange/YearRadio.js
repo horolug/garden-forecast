@@ -16,11 +16,11 @@ class YearRadio extends React.Component {
     return false;
   }
 
-  resetRadio ( srartDate, endDate ){
-    console.log("");
-    if (  this.radioDisabled( srartDate, endDate) ){
-      return false;
+  checkedRadio ( yearInquestion ){
+    if ( moment(yearInquestion).isSame(this.props.checkedRadio, 'year') ){
+      return true;
     }
+    return false;
   }
 
   render() {
@@ -31,6 +31,7 @@ class YearRadio extends React.Component {
     const monthFromProps = moment(this.props.beginDate).format("M");
     const daysFromProps = moment(this.props.beginDate).format("DD");
     const dateString = currentYear+"-"+monthFromProps+"-"+daysFromProps;
+    
     const thisYear = moment(dateString).format("YYYY-MM-DD");
     const thisYearLabel = moment (thisYear).format("YYYY");
     const nextYear = moment (thisYear).add(1, "year").format("YYYY-MM-DD");
@@ -44,7 +45,7 @@ class YearRadio extends React.Component {
               className="form-check-input" 
               name={radioName} 
               type="radio" 
-              checked={this.resetRadio( this.props.beginDate, thisYear) }
+              checked={this.checkedRadio( moment().format("YYYY-MM-DD") ) }
               disabled={this.radioDisabled(this.props.beginDate, thisYear )}
               value={thisYear} 
               id={"yearA-"+radioName+"-"+thisYear} />
@@ -58,6 +59,7 @@ class YearRadio extends React.Component {
               className="form-check-input" 
               name={radioName} 
               type="radio" 
+              checked={this.checkedRadio(moment().add(1, 'year').format("YYYY-MM-DD") ) }
               disabled={this.radioDisabled(this.props.beginDate, nextYear )}
               value={nextYear} 
               id={"yearB"+radioName+"-"+nextYear} />

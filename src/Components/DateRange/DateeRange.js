@@ -24,7 +24,6 @@ class DateRange extends React.Component {
   monthSelect = (event, rangeStart) => {
     let endDate = this.state.endDate;
   
-   
     if (rangeStart){
       if ( moment( this.state.endDate ).isBefore( event.target.value ) ){
         endDate = event.target.value ;
@@ -36,6 +35,7 @@ class DateRange extends React.Component {
       })
   
     } else {
+      endDate = event.target.value;
       if ( moment( event.target.value ).isBefore( this.state.startDate ) ){
         endDate = this.state.startDate;
       }
@@ -47,13 +47,26 @@ class DateRange extends React.Component {
   }
 
   yearSelect = (event, rangeStart) => {
+    let endDate = this.state.endDate;
+  
     if (rangeStart){
+      if ( moment( this.state.endDate ).isBefore( event.target.value ) ){
+        endDate = event.target.value ;
+      }
+
       this.setState({
-        startDate: event.target.value
+        startDate: event.target.value,
+        endDate: endDate
       })
+  
     } else {
+      endDate = event.target.value;
+      if ( moment( event.target.value ).isBefore( this.state.startDate ) ){
+        endDate = this.state.startDate;
+      }
+
       this.setState({
-        endDate: event.target.value
+        endDate: endDate
       })
     }
   }
@@ -74,6 +87,7 @@ class DateRange extends React.Component {
               beginDate={this.state.startDate}
               endDate={this.state.endDate}
               yearSelect={this.yearSelect}
+              checkedRadio={this.state.startDate}
             />
             <MonthRadio 
               monthSelect={this.monthSelect}
@@ -91,6 +105,7 @@ class DateRange extends React.Component {
               beginDate={this.state.startDate}
               endDate={this.state.endDate}
               yearSelect={this.yearSelect}
+              checkedRadio={this.state.endDate}
             />
             <MonthRadio 
               monthSelect={this.monthSelect}
