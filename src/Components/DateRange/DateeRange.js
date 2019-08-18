@@ -21,7 +21,7 @@ class DateRange extends React.Component {
     return moment().startOf('year').format("YYYY-MM-DD");
   }
 
-  monthSelect = (event, rangeStart) => {
+  dateSelect = (event, rangeStart) => {
     let endDate = this.state.endDate;
   
     if (rangeStart){
@@ -44,32 +44,7 @@ class DateRange extends React.Component {
         endDate: endDate
       })
     }
-  }
-
-  yearSelect = (event, rangeStart) => {
-    let endDate = this.state.endDate;
-  
-    if (rangeStart){
-      if ( moment( this.state.endDate ).isBefore( event.target.value ) ){
-        endDate = event.target.value ;
-      }
-
-      this.setState({
-        startDate: event.target.value,
-        endDate: endDate
-      })
-  
-    } else {
-      endDate = event.target.value;
-      if ( moment( event.target.value ).isBefore( this.state.startDate ) ){
-        endDate = this.state.startDate;
-      }
-
-      this.setState({
-        endDate: endDate
-      })
-    }
-  }
+  } 
 
   isDisabled(){
     return false;
@@ -86,11 +61,11 @@ class DateRange extends React.Component {
               rangeStart={true}
               beginDate={this.state.startDate}
               endDate={this.state.endDate}
-              yearSelect={this.yearSelect}
+              yearSelect={this.dateSelect}
               checkedRadio={this.state.startDate}
             />
             <MonthRadio 
-              monthSelect={this.monthSelect}
+              monthSelect={this.dateSelect}
               rangeStart={true}
               beginDate={this.state.startDate}
               endDate={this.state.endDate}
@@ -104,11 +79,11 @@ class DateRange extends React.Component {
               rangeStart={false}
               beginDate={this.state.startDate}
               endDate={this.state.endDate}
-              yearSelect={this.yearSelect}
+              yearSelect={this.dateSelect}
               checkedRadio={this.state.endDate}
             />
             <MonthRadio 
-              monthSelect={this.monthSelect}
+              monthSelect={this.dateSelect}
               rangeStart={false}
               beginDate={this.state.startDate}
               endDate={this.state.endDate}
