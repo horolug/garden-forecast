@@ -90,32 +90,6 @@ const helpers = {
     daysPassed++;
     return false;
   },
-  
-  /// legacy code - to be scrapped after refactoring
-  matchConditions( phase, plantType, plant, date, adjustedTemp ){
-    let conditionLabel = false;
-
-    if ( this.siutableTemp(plant, date, adjustedTemp) ){
-      if ( phase <= 0.25 ) {
-        // New moon - good for seed type
-        if ( plantType === "seed" ){
-          conditionLabel = true
-        }
-      } else if( (phase > 0.25) && (phase < 0.50) ){
-        // 2nd quarter - good for fruit type
-        if ( plantType === "fruit" ){
-          conditionLabel = true
-        }
-      } else if ( (phase >= 0.50) && (phase <= 0.75)){
-        // Full moon - good for roots
-        if ( plantType === "root" ){
-          conditionLabel = true
-        }
-      }
-    }
-    return conditionLabel;
-  },
-  /// end
 
   idealFor( date ){
     const phase = this.moonPhaseCalendar( date );
@@ -131,35 +105,6 @@ const helpers = {
     }
 
     return "";
-  },
-
-  nextIdealConditions( plantType, date, plant ){
-    // Take current day as start date
-    // Loop through moonphases until ideal conditions are shown
-    if( plantType === "" ){
-      return false;
-    }
-    let dayList = [];
-    let conditionLabel = "not optimal";
-    let dayInQuestion = moment().format("YYYY-MM-DD");
-    let moonPhase = this.moonPhaseCalendar( dayInQuestion );
-    const daysInFuture = 60;
-
-    for ( let i = 0; i<daysInFuture; i++ ){
-      conditionLabel = this.matchConditions(moonPhase, plantType, plant, date);
-      dayInQuestion = moment().add(i, 'days').format("YYYY-MM-DD");
-      moonPhase = this.moonPhaseCalendar(dayInQuestion);
-
-      if (conditionLabel === "optimal"){
-        dayList.push({
-          phase: moonPhase,
-          condition: conditionLabel,
-          date: dayInQuestion
-        });
-      }
-    }
-
-    return dayList;
   },
 
   willMature( plant, date, adjustedTemp ){
@@ -185,12 +130,6 @@ const helpers = {
   },
 
   isOptimalForPlanting( adjustedTemp, avgMin, avgMax, requiredTemp){
-
-    console.log("adjustedTemp", adjustedTemp);
-    console.log("avgMin", avgMin);
-    console.log("avgMax", avgMax);
-    console.log("requiredTemp", requiredTemp);
-
     let envTemp = avgMin;
 
     if ( adjustedTemp === "ideal"){
@@ -206,24 +145,6 @@ const helpers = {
     }
 
     return false;
-
-    // if ( adjustedTemp === "normal"){
-    //   if ( avgMin >=  requiredTemp[0] ){
-    //     return true;
-    //   }
-    // }
-    // if ( plantType == null ){
-    //   return false;
-    // }
-
-    // let conditionLabel = false;
-    // const moonPhase = this.moonPhaseCalendar( moment(date).format("YYYY-MM-DD") );
-
-    // if ( this.willMature( plant, date, adjustedTemp ) ){
-    //   conditionLabel = this.matchConditions(moonPhase, plantType, plant, date, adjustedTemp);
-    // }
-
-    // return conditionLabel;
   },
 
   moonPhaseCalendar( date ){
