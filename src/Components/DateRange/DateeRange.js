@@ -8,12 +8,14 @@ class DateRange extends React.Component {
     super(props);
     this.state = {
       startDate: moment().startOf('year').format("YYYY-MM-DD"),
-      endDate: moment().startOf('year').format("YYYY-MM-DD")
+      endDate: moment().startOf('year').format("YYYY-MM-DD"),
+      cardOpen: false
     };
   }
 
   selectedRange(calendarStart, calendarEnd){
     console.log('make new calendar based on provided range');
+    this.toggleCard();
     this.props.plannerDates(calendarStart, calendarEnd);
   }
 
@@ -46,60 +48,83 @@ class DateRange extends React.Component {
     }
   } 
 
-  isDisabled(){
-    return false;
+  toggleCard(){
+    
+    const currentState = this.state.cardOpen;
+
+
+    this.setState({
+      cardOpen: !currentState
+    })
   }
 
   render() {  
     return (
       <div>
-        <p>Year - select year</p>
-        <div className="row">
-          <div className="col">
-            <h3>From</h3>
-            <YearRadio 
-              rangeStart={true}
-              beginDate={this.state.startDate}
-              endDate={this.state.endDate}
-              yearSelect={this.dateSelect}
-              checkedRadio={this.state.startDate}
-            />
-            <MonthRadio 
-              monthSelect={this.dateSelect}
-              rangeStart={true}
-              beginDate={this.state.startDate}
-              endDate={this.state.endDate}
-              checkedRadio={this.state.startDate}
-            />
-          </div>
 
-          <div className="col">
-            <h3>To</h3>
-            <YearRadio 
-              rangeStart={false}
-              beginDate={this.state.startDate}
-              endDate={this.state.endDate}
-              yearSelect={this.dateSelect}
-              checkedRadio={this.state.endDate}
-            />
-            <MonthRadio 
-              monthSelect={this.dateSelect}
-              rangeStart={false}
-              beginDate={this.state.startDate}
-              endDate={this.state.endDate}
-              checkedRadio={this.state.endDate}
-            />
+        <div className="card mb-4">
+          <div 
+            onClick={() => this.toggleCard()}
+            className="card-header"> 
+            <button className="btn btn-link">
+              {this.state.cardOpen? "Uzdaryti laiko pasirinkima":" Pasirinkti sodinimo laika" }
+            </button>
           </div>
+          <div className={this.state.cardOpen? "card-body":"d-none" } >
+            <div className="row">
+              <div className="col">
+                <h4>Nuo</h4>
+                <YearRadio 
+                  rangeStart={true}
+                  beginDate={this.state.startDate}
+                  endDate={this.state.endDate}
+                  yearSelect={this.dateSelect}
+                  checkedRadio={this.state.startDate}
+                />
+                <MonthRadio 
+                  monthSelect={this.dateSelect}
+                  rangeStart={true}
+                  beginDate={this.state.startDate}
+                  endDate={this.state.endDate}
+                  checkedRadio={this.state.startDate}
+                />
+              </div>
 
-        </div>
-       
-        <div className="text-center mt-2 mb-2"> 
-          <button 
-            disabled={this.isDisabled()}
-            className="btn btn-primary"
-            onClick={() => this.selectedRange(this.state.startDate, this.state.endDate)}
-          >Pasirinkti </button>
-        </div>
+              <div className="col">
+                <h4>Iki</h4>
+                <YearRadio 
+                  rangeStart={false}
+                  beginDate={this.state.startDate}
+                  endDate={this.state.endDate}
+                  yearSelect={this.dateSelect}
+                  checkedRadio={this.state.endDate}
+                />
+                <MonthRadio 
+                  monthSelect={this.dateSelect}
+                  rangeStart={false}
+                  beginDate={this.state.startDate}
+                  endDate={this.state.endDate}
+                  checkedRadio={this.state.endDate}
+                />
+              </div>
+            </div>
+          </div>
+          <div className={this.state.cardOpen? "card-footer d-flex justify-content-between":"d-none"} >
+            <button 
+              className="btn btn-secondary"
+              onClick={() => this.toggleCard() }
+              >
+                Uzdaryti
+            </button>
+            <button 
+              className="btn btn-primary "
+              onClick={() => this.selectedRange(this.state.startDate, this.state.endDate)}
+              >
+                Pasirinkti
+            </button>
+            </div>
+        </div>        
+    
       </div>
       
     );
