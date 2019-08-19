@@ -81,12 +81,7 @@ class PlantSelector extends React.Component {
     this.selectedPlant = this.selectedPlant.bind(this);
   }
 
-  adjustTemperature = (data) => {
-    console.log('adjust temp called');
-    this.setState({
-      adjustedTemp : data
-    });
-  }
+
 
   saveEntry = (selectedDate) => {
     const selectedPlant = this.selectedPlant();
@@ -187,7 +182,6 @@ class PlantSelector extends React.Component {
                                     removeEntry={this.removeEntry} 
                                     saveEntry={this.saveEntry} 
                                     handleDayClick={this.handleDayClick}
-                                    adjustTemperature={this.adjustTemperature} 
                                     plannerDates={this.plannerDates}
                                     calendarStart={this.state.calendarStart}
                                     calendarEnd={this.state.calendarEnd}

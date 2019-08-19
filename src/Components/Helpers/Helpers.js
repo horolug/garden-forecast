@@ -184,19 +184,46 @@ const helpers = {
     return true;
   },
 
-  isOptimalForPlanting( date, plantType, plant, adjustedTemp ){
-    if ( plantType == null ){
-      return false;
+  isOptimalForPlanting( adjustedTemp, avgMin, avgMax, requiredTemp){
+
+    console.log("adjustedTemp", adjustedTemp);
+    console.log("avgMin", avgMin);
+    console.log("avgMax", avgMax);
+    console.log("requiredTemp", requiredTemp);
+
+    let envTemp = avgMin;
+
+    if ( adjustedTemp === "ideal"){
+      return true;
+    } else if ( adjustedTemp === "plus-ten" ){
+      if ( (avgMin + 10) >= requiredTemp[0] ){
+        return true;
+      }
+    } else {
+      if ( avgMin >= requiredTemp[0] ){
+        return true;
+      }
     }
 
-    let conditionLabel = false;
-    const moonPhase = this.moonPhaseCalendar( moment(date).format("YYYY-MM-DD") );
+    return false;
 
-    if ( this.willMature( plant, date, adjustedTemp ) ){
-      conditionLabel = this.matchConditions(moonPhase, plantType, plant, date, adjustedTemp);
-    }
+    // if ( adjustedTemp === "normal"){
+    //   if ( avgMin >=  requiredTemp[0] ){
+    //     return true;
+    //   }
+    // }
+    // if ( plantType == null ){
+    //   return false;
+    // }
 
-    return conditionLabel;
+    // let conditionLabel = false;
+    // const moonPhase = this.moonPhaseCalendar( moment(date).format("YYYY-MM-DD") );
+
+    // if ( this.willMature( plant, date, adjustedTemp ) ){
+    //   conditionLabel = this.matchConditions(moonPhase, plantType, plant, date, adjustedTemp);
+    // }
+
+    // return conditionLabel;
   },
 
   moonPhaseCalendar( date ){
@@ -275,7 +302,7 @@ const helpers = {
       }
       calendarBlock.push(monthData);
     }
-
+    console.log("calendarBlock", calendarBlock);
     return calendarBlock;
   }
 

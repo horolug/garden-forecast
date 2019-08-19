@@ -33,6 +33,7 @@ class PlantingCalendar extends React.Component {
     let listOfDays = this.createBlankCells( month.monthStart );
     const plantType = this.props.plant.type;
 
+    
     // badge to be used only in harvest cycle calculations
     // const badge = <span className="badge badge-pill badge-primary">{cycleCounter}</span>;
     // isOptimalForPlanting should match month avg temp with plant temp requirements
@@ -42,12 +43,18 @@ class PlantingCalendar extends React.Component {
     //   this.props.plant,
     //   this.props.adjustedTemp
     // );
+    const avgMax = month.avgMaxTemp;
+    const avgMin = month.avgMinTemp;
 
     for (let j = 0; j < month.days.length; j++){
       let optimal = this.currentDay(month.days[j].date);
-
       if (month.days[j].idealFor === plantType){
-        optimal = "optimal " + this.currentDay(month.days[j].date );
+        const isIdeal = helpers.isOptimalForPlanting(this.props.adjustedTemp, avgMin, avgMax, this.props.plant.optimalRange);
+        if (isIdeal){
+          optimal = "optimal " + this.currentDay(month.days[j].date );
+        } else {
+          optimal = this.currentDay(month.days[j].date );
+        }
       }
       
       if ( month.days[j].date === this.props.selectedDay ){

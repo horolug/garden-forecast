@@ -12,12 +12,20 @@ class plantCard extends React.Component {
     this.state = {
       plant: this.props.plant,
       selectedDay: "",
+      adjustedTemp: "normal"
     };
   }
 
   handleDayClick = (calendarDay) => {    
     this.setState({
       selectedDay: calendarDay
+    });
+  }
+
+  adjustTemperature = (data) => {
+    console.log('adjust temp called');
+    this.setState({
+      adjustedTemp : data
     });
   }
 
@@ -33,7 +41,7 @@ class plantCard extends React.Component {
           plannerDates={this.props.plannerDates}
         />
         <RadioToggle
-          onChange={this.props.adjustTemperature}
+          onChange={this.adjustTemperature}
         />
 
         <div className="row" >
