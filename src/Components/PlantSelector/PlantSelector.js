@@ -4,6 +4,7 @@ import moment from 'moment'
 import helpers from '../Helpers/Helpers';
 import Germination from '../Charts/GerminationChart';
 import PlantCard from '../PlantCard/PlantCard';
+import UsersSelection from '../User/UsersSelection';
 
 class PlantSelector extends React.Component {
 
@@ -14,7 +15,7 @@ class PlantSelector extends React.Component {
       monthRange: this.timeRange(),
       adjustedTemp: "normal",
       monthCount: 6,
-      savedList: [],
+      savedList: this.listFromLocalStorage(),
       plantArray: [
         {
           name: "carrot",
@@ -80,9 +81,13 @@ class PlantSelector extends React.Component {
     };
     this.selectedPlant = this.selectedPlant.bind(this);
   }
-
-
-
+  listFromLocalStorage (){
+    const retrievedList = JSON.parse( localStorage.getItem('savedList') );
+    if ( retrievedList === null){
+      return [];
+    }
+    return retrievedList;
+  }
   saveEntry = (selectedDate) => {
     const selectedPlant = this.selectedPlant();
     const entryID = selectedDate+"-"+selectedPlant.id;
@@ -99,6 +104,8 @@ class PlantSelector extends React.Component {
       const updatedlList = this.state.savedList.slice(0);
       updatedlList.unshift(newEntry);
 
+      localStorage.setItem('savedList', JSON.stringify(updatedlList) );
+
       this.setState({
         savedList: updatedlList
       })
@@ -109,6 +116,8 @@ class PlantSelector extends React.Component {
     let savedList = this.state.savedList.slice(0);
     const entryIndex = savedList.findIndex(x => x.entryID === entryID);
     savedList.splice(entryIndex, 1);
+    
+    localStorage.setItem('savedList', JSON.stringify(savedList) );
     this.setState({
       savedList: savedList
     });
@@ -159,6 +168,7 @@ class PlantSelector extends React.Component {
         
         <Router>
           <div>
+            
             <div className="d-flex justify-content-center mb-4">
               {this.state.plantArray.map((item, index) => ( 
                 <NavLink 
@@ -170,6 +180,16 @@ class PlantSelector extends React.Component {
                   {item.name}
                 </NavLink> 
               ))} 
+            </div>
+
+            <div>
+              <NavLink 
+                to="/pasirinkimai/"
+                role="button"
+                className='btn btn-primary mb-2'
+              >
+                Mano pasirinkimai
+              </NavLink>
             </div>
 
             <Route 
@@ -185,8 +205,14 @@ class PlantSelector extends React.Component {
                                     plannerDates={this.plannerDates}
                                     calendarStart={this.state.calendarStart}
                                     calendarEnd={this.state.calendarEnd}
-                                    plant={this.selectedPlant()} />}
-            />
+                                    plant={this.selectedPlant()} />} />
+            <Route 
+              path="/pasirinkimai/" 
+              render={(props) => <UsersSelection {...props}  
+                                    removeEntry={this.removeEntry}
+                                    savedList={this.state.savedList} />} />
+
+
           </div>
         </Router>
 
