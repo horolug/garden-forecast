@@ -20,14 +20,12 @@ class UsersSelection extends React.Component {
     console.log("savedList", this.props.savedList );
     return(
       <div>
-        <h3>User selection</h3>
-
-        <ul className="list-group">
+        <ul className="list-group mt-4 text-left">
           {this.props.savedList.map((item) => 
             <li className="list-group-item" key={item.entryID}>
-              <p>Augalas : {item.plant.name}</p>
-              <p>Sodinama : {item.selectedDate}</p>
-              <p>{this.harvestMessage(item)}</p>
+              <p className="mb-1">Augalas : {item.plant.name}</p>
+              <p className="mb-1">Sodinama : {item.selectedDate}</p>
+              <p className="mb-1">{this.harvestMessage(item)}</p>
               <button className="btn btn-light"
                 onClick={ () => this.props.removeEntry(item.entryID) } >
                 remove

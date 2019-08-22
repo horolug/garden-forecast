@@ -6,16 +6,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="">
-          <h1>Kalendorius </h1>
+        <header className="mb-4">
+          <a href="/"> 
+            <h1> Kalendorius </h1>
+          </a>
         </header>
 
-        <div className="main container">
+        <div className="main container mt-4 mb-4">
           <PlantSelector />
         </div>
 
-        <footer>
-          <p> Kalendorius </p>
+        <footer className="mt-4">
+          <a href="/">
+            <p> Kalendorius </p>
+          </a> 
         </footer>
       </div>
     );

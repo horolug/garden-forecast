@@ -155,17 +155,22 @@ class PlantSelector extends React.Component {
   }
      
   render() {
+    let usersSelection = "";
+
+    if ( this.state.savedList.length > 0 ){
+      usersSelection=  <div>
+              <NavLink 
+                to="/pasirinkimai/"
+                role="button"
+                className='btn btn-outline-primary mb-2'
+              >
+                Mano pasirinkimai
+              </NavLink>
+            </div>
+    }
+
     return (
-      <div>
-        <div className="row">
-          <div className="col mt-4 mb-4">
-            <h3>Plant selection</h3>
-          </div>
-        </div>
-        <div className="row">
-          <p>Pasirinkite kas bus siejama</p>
-        </div>
-        
+      <div> 
         <Router>
           <div>
             
@@ -182,15 +187,7 @@ class PlantSelector extends React.Component {
               ))} 
             </div>
 
-            <div>
-              <NavLink 
-                to="/pasirinkimai/"
-                role="button"
-                className='btn btn-primary mb-2'
-              >
-                Mano pasirinkimai
-              </NavLink>
-            </div>
+            {usersSelection}
 
             <Route 
               path="/" exact

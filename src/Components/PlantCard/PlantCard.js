@@ -34,22 +34,20 @@ class plantCard extends React.Component {
     return (
       <div>
         <div className="row">
-          <p>Pasirinkite kur bus siejamos sėklos</p>
-          <p>Pagal nutylėjimą skaičiuoklė numato kad bus siejamą į atvirą gruntą</p>
+          <div className="col">
+            <p>Pasirinkite kur bus siejamos sėklos. Pagal nutylėjimą skaičiuoklė numato kad bus siejamą į atvirą gruntą</p>
+          </div>
         </div>
-        <DateRange 
-          plannerDates={this.props.plannerDates}
-        />
+       
         <RadioToggle
           onChange={this.adjustTemperature}
         />
 
+        <DateRange 
+          plannerDates={this.props.plannerDates}
+        />
         <div className="row" >
           <div className="col mt-4">
-            <p>Seeding / propagation advice is shown here </p>
-            <p>start {this.props.plannerDates[0]}</p>
-            <p>end {this.props.plannerDates[1]}</p>
-
             <div className="row">
               <div className="col">
                 <PlantingCalendar
