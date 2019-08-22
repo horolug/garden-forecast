@@ -7,6 +7,15 @@ class UsersSelection extends React.Component {
     super(props);
     this.state = {};
   }
+
+  harvestMessage(item){
+    if ( item.willMature ){
+      return "Planuojamas derlius :"+helpers.harvestTime(item.plant, item.selectedDate);
+    }
+
+    return "Augalas nespes sudereti";
+  }
+
   render() {
     console.log("savedList", this.props.savedList );
     return(
@@ -18,7 +27,7 @@ class UsersSelection extends React.Component {
             <li className="list-group-item" key={item.entryID}>
               <p>Augalas : {item.plant.name}</p>
               <p>Sodinama : {item.selectedDate}</p>
-              <p>Planuojamas derlius : {helpers.harvestTime(item.plant, item.selectedDate)} </p>
+              <p>{this.harvestMessage(item)}</p>
               <button className="btn btn-light"
                 onClick={ () => this.props.removeEntry(item.entryID) } >
                 remove

@@ -92,14 +92,15 @@ class PlantSelector extends React.Component {
     const selectedPlant = this.selectedPlant();
     const entryID = selectedDate+"-"+selectedPlant.id;
     const savedList = this.state.savedList;
-
+    console.log("adjusted temp", this.state.adjustedTemp);
     if (savedList.some(e => e.entryID === entryID)) {
       return false;     
     } else {
       const newEntry = {
         selectedDate: selectedDate,
         plant: selectedPlant,
-        entryID: entryID
+        entryID: entryID,
+        willMature: helpers.willMature(selectedPlant, selectedDate, this.state.adjustedTemp )
       } 
       const updatedlList = this.state.savedList.slice(0);
       updatedlList.unshift(newEntry);
