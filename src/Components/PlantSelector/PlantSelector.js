@@ -116,13 +116,12 @@ class PlantSelector extends React.Component {
     let savedList = this.state.savedList.slice(0);
     const entryIndex = savedList.findIndex(x => x.entryID === entryID);
     savedList.splice(entryIndex, 1);
-    
+
     localStorage.setItem('savedList', JSON.stringify(savedList) );
     this.setState({
       savedList: savedList
     });
   }
-
 
   timeRange (){
     const currentMonth = moment().startOf('month');

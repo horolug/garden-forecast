@@ -80,15 +80,18 @@ const helpers = {
     return true;
   },
 
-  harvetTime ( plant, plantingTime ){
+  harvestTime ( plant, plantingTime ){
     console.log("plant to fruit", plant.plantToFruit);
-    let daysPassed = 0;
+    const harvestDate = moment(plantingTime).add(plant.plantToFruit , "days" ).format("YYYY-MM-DD");
 
-    if (plant.plantToFruit === daysPassed){
-      return true;
-    }
-    daysPassed++;
-    return false;
+    return harvestDate;
+    // let daysPassed = 0;
+
+    // if (plant.plantToFruit === daysPassed){
+    //   return true;
+    // }
+    // daysPassed++;
+    // return false;
   },
 
   idealFor( date ){
