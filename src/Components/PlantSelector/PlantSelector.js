@@ -81,6 +81,13 @@ class PlantSelector extends React.Component {
     };
     this.selectedPlant = this.selectedPlant.bind(this);
   }
+
+  adjustedTemp = (tempValue) =>{
+    this.setState({
+      adjustedTemp: tempValue
+    });
+  }
+
   listFromLocalStorage (){
     const retrievedList = JSON.parse( localStorage.getItem('savedList') );
     if ( retrievedList === null){
@@ -96,11 +103,13 @@ class PlantSelector extends React.Component {
     if (savedList.some(e => e.entryID === entryID)) {
       return false;     
     } else {
+      console.log("plantedIn", this.state.adjustedTemp);
       const newEntry = {
         selectedDate: selectedDate,
         plant: selectedPlant,
         entryID: entryID,
-        willMature: helpers.willMature(selectedPlant, selectedDate, this.state.adjustedTemp )
+        willMature: helpers.willMature(selectedPlant, selectedDate, this.state.adjustedTemp ),
+        plantedIn: this.state.adjustedTemp
       } 
       const updatedlList = this.state.savedList.slice(0);
       updatedlList.unshift(newEntry);
@@ -196,6 +205,7 @@ class PlantSelector extends React.Component {
               path="/sodinimas/" 
               render={(props) => <PlantCard {...props} 
                                     savedList={this.state.savedList} 
+                                    adjustedTemp={this.adjustedTemp}
                                     removeEntry={this.removeEntry} 
                                     saveEntry={this.saveEntry} 
                                     handleDayClick={this.handleDayClick}

@@ -23,7 +23,8 @@ class plantCard extends React.Component {
   }
 
   adjustTemperature = (data) => {
-    console.log('adjust temp called');
+    console.log('adjust temp called', data);
+    this.props.adjustedTemp(data);
     this.setState({
       adjustedTemp : data
     });
