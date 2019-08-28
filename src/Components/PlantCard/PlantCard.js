@@ -1,9 +1,9 @@
 import React from 'react';
+import Toast from 'react-bootstrap/Toast'
 import RadioToggle from '../Helpers/RadioToggle';
 import DateRange from '../DateRange/DateeRange';
 import PlantingCalendar from '../Calendar/Calendar';
 import PlannerSidebar from '../Planner/PlannerSidebar';
-
 
 class plantCard extends React.Component {
 
@@ -11,14 +11,18 @@ class plantCard extends React.Component {
     super(props);
     this.state = {
       plant: this.props.plant,
+      showToast: false,
+      level: 'success',
       selectedDay: "",
       adjustedTemp: "normal"
     };
   }
 
-  handleDayClick = (calendarDay) => {    
+  handleDayClick = (calendarDay) => {   
+    console.log("calendarDay", calendarDay); 
     this.setState({
-      selectedDay: calendarDay
+      selectedDay: calendarDay,
+      showToast: true
     });
   }
 
@@ -30,8 +34,19 @@ class plantCard extends React.Component {
     });
   }
 
-  render() {
+  toggleToast (){
+    const showToast = this.state.showToast;
+    this.setState({
+      showToast: !showToast,
+    })
+  }
 
+  saveEntry(){
+    this.toggleToast();
+    this.props.saveEntry(this.state.selectedDay);
+  }
+
+  render() {
     return (
       <div>
         <div className="row">
@@ -69,14 +84,31 @@ class plantCard extends React.Component {
                   plant={this.props.plant}
                   savedList={this.props.savedList}
                   selectedDay={this.state.selectedDay}
-
                 />
               </div>
             </div>
-            
-
           </div>
         </div>
+
+        <Toast 
+          show={this.state.showToast} 
+          onClose={()=>this.toggleToast()}
+          style={{
+            position: 'fixed',
+            top: 150,
+            right: 10,
+          }}
+          >
+          <Toast.Header>
+            <strong className="mr-auto">Prideti prie pasirinkimu</strong>
+          </Toast.Header>
+          <Toast.Body>
+            <p>Augalas: {this.props.plant.name}</p>
+            <p>Sodinimo laikas: {this.state.selectedDay}</p>
+            <button onClick={() => this.saveEntry() } className="btn btn-primary">Prideti</button>  
+          </Toast.Body>
+        </Toast> 
+
       </div>
     );
   }

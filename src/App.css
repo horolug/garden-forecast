@@ -31,3 +31,11 @@
     transform: rotate(360deg);
   }
 }
+
+.toast.fade{
+  display: none;
+}
+
+.toast.show{
+  display: block;
+}

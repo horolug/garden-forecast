@@ -8,16 +8,6 @@ class PlannerSidebar extends React.Component {
   }
 
   render() {
-
-    let plannerButton = "";
-    if ( this.props.selectedDay !== "" ){
-      plannerButton = <button 
-        onClick={ () => this.props.saveEntry(this.props.selectedDay) }
-        className="btn btn-primary mb-4">
-          Prideti data
-      </button>
-    }
-
     let savedList = "";
     if (this.props.savedList.length > 0){
       savedList =  <ul className="list-group mt-4">
@@ -37,8 +27,6 @@ class PlannerSidebar extends React.Component {
     return (
       <div>
         <p>Paspauskite ant kalendoriaus dienos noredami pasirinkit sodinimo data </p>
-
-        {plannerButton}
 
         <p>Pasirinkti augalai</p>
         {savedList}
