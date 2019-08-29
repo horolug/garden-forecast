@@ -4,6 +4,8 @@ import moment from 'moment'
 import helpers from '../Helpers/Helpers';
 import Germination from '../Charts/GerminationChart';
 import SeedToPlant from '../Charts/SeedToPlantChart';
+import PlantToFruit from '../Charts/PlantToFruitChart';
+
 import PlantCard from '../PlantCard/PlantCard';
 import UsersSelection from '../User/UsersSelection';
 
@@ -24,7 +26,7 @@ class PlantSelector extends React.Component {
           type: "root",
           variety: "orange",
           seedtoPlant: [7, 10],
-          plantToFruit: 75,
+          plantToFruit: [65, 75],
           minTemp: 4,
           optimalRange: [7, 30]
         },
@@ -34,17 +36,18 @@ class PlantSelector extends React.Component {
           type: "root",
           variety: "big",
           seedtoPlant: [3, 8],
-          plantToFruit: 25,
+          plantToFruit: [15, 25],
           minTemp: 7,
           optimalRange: [9, 29]
         },
+        
         {
           name: "tomato",
           id: "tomato",
           type: "fruit",
           variety: "cherry",
           seedtoPlant: [6, 14],
-          plantToFruit: 27,
+          plantToFruit: [17, 27],
           minTemp: 10,
           optimalRange: [16, 30]
         },
@@ -54,7 +57,7 @@ class PlantSelector extends React.Component {
           type: "fruit",
           variety: "round",
           seedtoPlant: [6, 10],
-          plantToFruit: 27,
+          plantToFruit: [37, 47],
           minTemp: 16,
           optimalRange: [21, 32]
         },
@@ -64,7 +67,7 @@ class PlantSelector extends React.Component {
           type: "seed",
           variety: "green",
           seedtoPlant: [10, 18],
-          plantToFruit: 41,
+          plantToFruit: [30, 41],
           minTemp: 7,
           optimalRange: [10, 21]
         },
@@ -74,7 +77,7 @@ class PlantSelector extends React.Component {
           type: "seed",
           variety: "sweet",
           seedtoPlant: [6, 10],
-          plantToFruit: 50,
+          plantToFruit: [30, 50],
           minTemp: 2,
           optimalRange: [4, 27]
         },
@@ -205,6 +208,10 @@ class PlantSelector extends React.Component {
             <Route 
               path="/" exact
               render={(props) => <SeedToPlant {...props} plants = {this.state.plantArray} />}/>
+
+            <Route 
+              path="/" exact
+              render={(props) => <PlantToFruit {...props} plants = {this.state.plantArray} />}/>
 
             <Route 
               path="/sodinimas/" 

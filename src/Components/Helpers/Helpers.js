@@ -80,20 +80,6 @@ const helpers = {
     return true;
   },
 
-  harvestTime ( plant, plantingTime ){
-    console.log("plant to fruit", plant.plantToFruit);
-    const harvestDate = moment(plantingTime).add(plant.plantToFruit , "days" ).format("YYYY-MM-DD");
-
-    return harvestDate;
-    // let daysPassed = 0;
-
-    // if (plant.plantToFruit === daysPassed){
-    //   return true;
-    // }
-    // daysPassed++;
-    // return false;
-  },
-
   idealFor( date ){
     const phase = this.moonPhaseCalendar( date );
     if ( phase <= 0.25 ) {
@@ -111,7 +97,7 @@ const helpers = {
   },
 
   willMature( plant, date, adjustedTemp ){
-    const timeToHarvest = plant.plantToFruit;
+    const timeToHarvest = (plant.plantToFruit[0] + plant.plantToFruit[1])/2;
     const fruitDate = moment(date).add(timeToHarvest, "days").format("MM");
     let tempIncrease = 0;
     if ( adjustedTemp === "plus-ten"  ){
@@ -184,16 +170,6 @@ const helpers = {
     this.stay = function() {
       return count;
     };
-  },
-
-  harvestDays (date, plant, startDate){
-    // console.log("harvestDays date", date );
-    // console.log("harvestDays plant", plant.plantToFruit );
-    // console.log("startDate", startDate );
-
-    const harvestDate = moment(startDate).add(plant.plantToFruit, 'days').format("YYYY-MM-DD");
-
-    // console.log("harvestDate", harvestDate);
   },
 
   makeCalendar(startDate, endDate){
