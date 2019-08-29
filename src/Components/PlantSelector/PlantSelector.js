@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import moment from 'moment'
 import helpers from '../Helpers/Helpers';
 import Germination from '../Charts/GerminationChart';
+import SeedToPlant from '../Charts/SeedToPlantChart';
 import PlantCard from '../PlantCard/PlantCard';
 import UsersSelection from '../User/UsersSelection';
 
@@ -160,7 +161,6 @@ class PlantSelector extends React.Component {
       calendarStart: calendarStart,
       calendarEnd: calendarEnd
     })
-    // return calendarRange;
   }
      
   render() {
@@ -201,6 +201,11 @@ class PlantSelector extends React.Component {
             <Route 
               path="/" exact
               render={(props) => <Germination {...props} plants = {this.state.plantArray} />}/>
+
+            <Route 
+              path="/" exact
+              render={(props) => <SeedToPlant {...props} plants = {this.state.plantArray} />}/>
+
             <Route 
               path="/sodinimas/" 
               render={(props) => <PlantCard {...props} 
