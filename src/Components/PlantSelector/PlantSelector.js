@@ -173,7 +173,7 @@ class PlantSelector extends React.Component {
                 role="button"
                 className='btn btn-outline-primary mb-2'
               >
-                Mano pasirinkimai
+                Mano pasirinkimai  <span className="badge badge-light">{this.state.savedList.length}</span> 
               </NavLink>
             </div>
     }
