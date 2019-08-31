@@ -96,6 +96,13 @@ const helpers = {
     return "";
   },
 
+  harvestTime ( plant, plantingTime ){
+    const harvestDate = moment(plantingTime).add(plant.plantToFruit , "days" ).format("YYYY-MM-DD");
+
+    return harvestDate;
+  },
+
+
   willMature( plant, date, adjustedTemp ){
     const timeToHarvest = (plant.plantToFruit[0] + plant.plantToFruit[1])/2;
     const fruitDate = moment(date).add(timeToHarvest, "days").format("MM");
